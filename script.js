@@ -78,94 +78,96 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // =================================================================
-    // === CONFIGURACIÓN DE CANCIONES ===
+    // === CONFIGURACIÓN DE CANCIONES (¡AHORA SIN TIEMPOS!) ===
     // =================================================================
     const songs = [
         {
             title: "All I Want Is You",
             artist: "Rebzyyx",
             src: "song.mp3",
+            // AQUÍ AGREGAS EL SIGNIFICADO:
+            meaning: "Esta canción refleja la dependencia emocional extrema de Archie. Representa cómo, a pesar del dolor y la toxicidad, él prefiere aferrarse a ti antes que enfrentar el vacío de la soledad. Es su grito desesperado de 'no me abandones' aunque le hagas daño.",
+            // LAS LETRAS AHORA SON SOLO UNA LISTA DE TEXTO, SIN TIEMPOS:
             lyrics: [
-  { "time": 0, "line": "SÉ LO QUE QUIERES, NENA" },
-  { "time": 1, "line": "DÉJAME SER QUIÉN..." },
-  { "time": 2, "line": "TE ABRACE, ABRACE POR SIE-E-EMPRE" },
-  { "time": 4, "line": "ESTARÍAMOS BIEN JUN-JUN-JUNTOS" },
-  { "time": 7, "line": "Sé lo que quieres, nena" },
-  { "time": 8, "line": "Déjame ser el único que" },
-  { "time": 10, "line": "Sostenga tu mano por siempre" },
-  { "time": 12, "line": "Seríamos perfectos juntos" },
-  { "time": 13, "line": "Te haré sentir especial" },
-  { "time": 15, "line": "Quitaré todo tu estrés" },
-  { "time": 16, "line": "Sanaré los huecos de tu corazón" },
-  { "time": 18, "line": "Siempre fue mi intención" },
-  { "time": 19, "line": "Tengo problemas mentales" },
-  { "time": 21, "line": "Siempre te extraño, joder" },
-  { "time": 23, "line": "Hay pañuelos con sangre" },
-  { "time": 24, "line": "Tirados por todo mi cuarto" },
-  { "time": 26, "line": "Tengo que limpiar este desastre" },
-  { "time": 28, "line": "Bebé, estoy muy jodido" },
-  { "time": 29, "line": "Bebé, ¿me vas a ayudar?" },
-  { "time": 31, "line": "Porque yo te ayudaré a ti" },
-  { "time": 33, "line": "Solo te quiero a ti AHORA" },
-  { "time": 34, "line": "Lo único que quiero hacer" },
-  { "time": 36, "line": "Es esperar a que me llames" },
-  { "time": 38, "line": "Bebé, cuánto lo siento" },
-  { "time": 40, "line": "¿Quieres lastimarme?" },
-  { "time": 41, "line": "¿Vas a hacerme daño?" },
-  { "time": 43, "line": "Por favor, no me abandones" },
-  { "time": 44, "line": "Por favor, no me abandones" },
-  { "time": 46, "line": "Solo te quiero a ti AHORA" },
-  { "time": 47, "line": "Lo único que quiero hacer" },
-  { "time": 49, "line": "Es esperar a que me llames" },
-  { "time": 51, "line": "Bebé, cuánto lo siento" },
-  { "time": 53, "line": "¿Quieres lastimarme?" },
-  { "time": 54, "line": "¿Vas a hacerme daño?" },
-  { "time": 56, "line": "Por favor, no me abandones" },
-  { "time": 57, "line": "Por favor, no me abandones" },
-  { "time": 61, "line": "No me abandones, madrugué por ti" },
-  { "time": 62, "line": "Toda la noche despierto, drogándome" },
-  { "time": 65, "line": "Me haces sentir sucio" },
-  { "time": 68, "line": "Dices que doy asco" },
-  { "time": 69, "line": "Me dices que me amas" },
-  { "time": 70, "line": "Pero tus palabras no valen nada" },
-  { "time": 72, "line": "No quiero hablar de esto" },
-  { "time": 74, "line": "No, no está a discusión" },
-  { "time": 76, "line": "Tú controlas mi vida" },
-  { "time": 77, "line": "Me siento como tu puta marioneta" },
-  { "time": 79, "line": "Sigue mandándome a callar" },
-  { "time": 80, "line": "Okay, nena, está bien" },
-  { "time": 82, "line": "Recuerdo aquellas noches" },
-  { "time": 84, "line": "Bailando bajo la luz de la luna" },
-  { "time": 86, "line": "Recuerdo esconderme" },
-  { "time": 87, "line": "Era tímido y tenía pánico escénico" },
-  { "time": 89, "line": "Recuerdo estar llorando" },
-  { "time": 90, "line": "Solo quiero que estés bien" },
-  { "time": 92, "line": "Quiero que estés bien" },
-  { "time": 93, "line": "Okay, bebé, está bien" },
-  { "time": 95, "line": "Quiero que estés bien" },
-  { "time": 96, "line": "Okay, bebé, está bien" },
-  { "time": 98, "line": "Solo te quiero a ti AHORA" },
-  { "time": 100, "line": "Lo único que quiero hacer" },
-  { "time": 102, "line": "Es esperar a que me llames" },
-  { "time": 104, "line": "Bebé, cuánto lo siento" },
-  { "time": 105, "line": "¿Quieres lastimarme?" },
-  { "time": 106, "line": "¿Vas a hacerme daño?" },
-  { "time": 108, "line": "Por favor, no me abandones" },
-  { "time": 110, "line": "Por favor, no me abandones" },
-  { "time": 111, "line": "Solo te quiero a ti AHORA" },
-  { "time": 114, "line": "Lo único que quiero hacer" },
-  { "time": 115, "line": "Es esperar a que me llames" },
-  { "time": 116, "line": "Bebé, cuánto lo siento" },
-  { "time": 118, "line": "¿Quieres lastimarme?" },
-  { "time": 120, "line": "¿Vas a hacerme daño?" },
-  { "time": 121, "line": "Por favor, no me abandones" },
-  { "time": 123, "line": "Por favor, no me abandones" }
-           ]
+                "SÉ LO QUE QUIERES, NENA",
+                "DÉJAME SER QUIÉN...",
+                "TE ABRACE, ABRACE POR SIE-E-EMPRE",
+                "ESTARÍAMOS BIEN JUN-JUN-JUNTOS",
+                "Sé lo que quieres, nena",
+                "Déjame ser el único que",
+                "Sostenga tu mano por siempre",
+                "Seríamos perfectos juntos",
+                "Te haré sentir especial",
+                "Quitaré todo tu estrés",
+                "Sanaré los huecos de tu corazón",
+                "Siempre fue mi intención",
+                "Tengo problemas mentales",
+                "Siempre te extraño, joder",
+                "Hay pañuelos con sangre",
+                "Tirados por todo mi cuarto",
+                "Tengo que limpiar este desastre",
+                "Bebé, estoy muy jodido",
+                "Bebé, ¿me vas a ayudar?",
+                "Porque yo te ayudaré a ti",
+                "Solo te quiero a ti AHORA",
+                "Lo único que quiero hacer",
+                "Es esperar a que me llames",
+                "Bebé, cuánto lo siento",
+                "¿Quieres lastimarme?",
+                "¿Vas a hacerme daño?",
+                "Por favor, no me abandones",
+                "Por favor, no me abandones",
+                "Solo te quiero a ti AHORA",
+                "Lo único que quiero hacer",
+                "Es esperar a que me llames",
+                "Bebé, cuánto lo siento",
+                "¿Quieres lastimarme?",
+                "¿Vas a hacerme daño?",
+                "Por favor, no me abandones",
+                "Por favor, no me abandones",
+                "No me abandones, madrugué por ti",
+                "Toda la noche despierto, drogándome",
+                "Me haces sentir sucio",
+                "Dices que doy asco",
+                "Me dices que me amas",
+                "Pero tus palabras no valen nada",
+                "No quiero hablar de esto",
+                "No, no está a discusión",
+                "Tú controlas mi vida",
+                "Me siento como tu puta marioneta",
+                "Sigue mandándome a callar",
+                "Okay, nena, está bien",
+                "Recuerdo aquellas noches",
+                "Bailando bajo la luz de la luna",
+                "Recuerdo esconderme",
+                "Era tímido y tenía pánico escénico",
+                "Recuerdo estar llorando",
+                "Solo quiero que estés bien",
+                "Quiero que estés bien",
+                "Okay, bebé, está bien",
+                "Quiero que estés bien",
+                "Okay, bebé, está bien",
+                "Solo te quiero a ti AHORA",
+                "Lo único que quiero hacer",
+                "Es esperar a que me llames",
+                "Bebé, cuánto lo siento",
+                "¿Quieres lastimarme?",
+                "¿Vas a hacerme daño?",
+                "Por favor, no me abandones",
+                "Por favor, no me abandones",
+                "Solo te quiero a ti AHORA",
+                "Lo único que quiero hacer",
+                "Es esperar a que me llames",
+                "Bebé, cuánto lo siento",
+                "¿Quieres lastimarme?",
+                "¿Vas a hacerme daño?",
+                "Por favor, no me abandones",
+                "Por favor, no me abandones"
+            ]
         }
     ];
 
     let currentSongIndex = 0;
-    let currentLyricIndex = -1;
 
     const playPauseBtn = document.getElementById('play-pause-btn');
     const prevBtn = document.getElementById('prev-btn');
@@ -173,9 +175,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const songTitleEl = document.getElementById('song-title');
     const songArtistEl = document.getElementById('song-artist');
     const spotifyIcon = document.querySelector('.spotify-icon');
-    
-    // CORRECCIÓN AQUÍ: Faltaba cerrar comilla y paréntesis, y el ID estaba cortado.
     const lyricsContainer = document.getElementById('lyrics-container');
+    const meaningContainer = document.getElementById('song-meaning'); // Referencia al nuevo contenedor
     
     const playIcon = '<i class="fas fa-play"></i>';
     const pauseIcon = '<i class="fas fa-pause"></i>';
@@ -185,30 +186,41 @@ document.addEventListener('DOMContentLoaded', function() {
         audio.src = song.src;
         songTitleEl.textContent = song.title;
         songArtistEl.textContent = song.artist;
+        
+        // Cargar letras y significado
         loadLyrics(song.lyrics);
+        loadMeaning(song.meaning);
+
         audio.pause();
         playPauseBtn.innerHTML = playIcon;
         spotifyIcon.classList.remove('is-spinning');
     }
 
+    function loadMeaning(meaningText) {
+        if(meaningText) {
+            meaningContainer.textContent = meaningText;
+        } else {
+            meaningContainer.textContent = "Disfruta de la música...";
+        }
+    }
+
     function loadLyrics(lyrics) {
         lyricsContainer.innerHTML = ''; 
-        currentLyricIndex = -1; 
 
         if (!lyrics || lyrics.length === 0) {
-            lyricsContainer.innerHTML = '<p class="lyric-line active">♪ No hay letra para esta canción ♪</p>';
+            lyricsContainer.innerHTML = '<p class="lyric-line">♪ No hay letra para esta canción ♪</p>';
             return;
         }
 
-        lyrics.forEach((line, index) => {
+        // Simplemente añadimos las líneas, sin lógica de tiempo
+        lyrics.forEach((line) => {
             const p = document.createElement('p');
-            p.textContent = line.line;
+            p.textContent = line;
             p.classList.add('lyric-line');
-            p.dataset.index = index; 
             lyricsContainer.appendChild(p);
         });
-        
-        lyricsContainer.style.transform = `translateY(0px)`;
+        // Reiniciar el scroll al top
+        document.querySelector('.lyrics-section').scrollTop = 0;
     }
 
     playPauseBtn.addEventListener('click', () => {
@@ -249,41 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
         nextBtn.click(); 
     });
 
-    audio.addEventListener('timeupdate', () => {
-        const currentTime = audio.currentTime;
-        const lyrics = songs[currentSongIndex].lyrics;
-
-        if (!lyrics || lyrics.length === 0) return; 
-
-        let newActiveIndex = -1;
-        for (let i = lyrics.length - 1; i >= 0; i--) {
-            if (currentTime >= lyrics[i].time) {
-                newActiveIndex = i;
-                break;
-            }
-        }
-
-        if (newActiveIndex === currentLyricIndex) {
-            return;
-        }
-
-        currentLyricIndex = newActiveIndex;
-
-        lyricsContainer.querySelectorAll('.lyric-line').forEach(lineEl => {
-            lineEl.classList.remove('active');
-        });
-
-        if (currentLyricIndex !== -1) {
-            const activeLine = lyricsContainer.querySelector(`.lyric-line[data-index="${currentLyricIndex}"]`);
-            if (activeLine) {
-                activeLine.classList.add('active');
-                const scrollOffset = activeLine.offsetTop - (100 / 2) + (activeLine.clientHeight / 2);
-                lyricsContainer.style.transform = `translateY(-${scrollOffset}px)`;
-            }
-        } else {
-            lyricsContainer.style.transform = `translateY(0px)`;
-        }
-    });
+    // Se eliminó el audio.addEventListener('timeupdate') porque ya no es necesario para el scroll manual.
 
     loadSong(currentSongIndex);
 
