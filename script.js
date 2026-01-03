@@ -86,7 +86,21 @@ document.addEventListener('DOMContentLoaded', function() {
             artist: "Arctic Monkeys",
             src: "song.mp3",
             // AQUÍ AGREGAS EL SIGNIFICADO:
-            meaning: "Esta canción refleja la dependencia emocional extrema de Archie. Representa cómo, a pesar del dolor y la toxicidad, él prefiere aferrarse a ti antes que enfrentar el vacío de la soledad. Es su grito desesperado de 'no me abandones' aunque le hagas daño.",
+            meaning: "¿Alguna vez has contestado una llamada a las tres de la mañana sabiendo perfectamente que al otro lado hay alguien que solo te recuerda cuando las drogas le aflojan la lengua y le bajan los estándares? ¿Cuántas veces has permitido que te usen como pañuelo desechable para sus bajones, solo para que al día siguiente te ignoren como si fueras un error de borracho?
+
+Porque eso es exactamente lo que pasa aquí: un tipo (o tipa) que solo te busca cuando está tan colocado que hasta tú le pareces buena idea. Cuando está sobrio, ni te registra. Eres el plan Z, el relleno de un vacío que solo aparece cuando la realidad le pega fuerte y necesita a alguien que le diga “sí, todo bien” aunque sepa que es mentira.
+
+Imagínate la escena real: estás intentando dormir, el teléfono vibra, lo miras y ahí está su nombre. Contestas porque todavía queda algo de esa ilusión tonta que te dice “quizá esta vez sea diferente”. Habla arrastrando las palabras, te dice que te extraña muchísimo, que deberías verte ya, que eres lo único que le hace sentido en ese momento. Tú hablas, te ilusionas un rato, hasta sientes mariposas. Y luego llega el amanecer y… silencio total. Ni un mensaje de “gracias por escucharme”, ni un “¿cómo estás?”, nada. Desaparece hasta la próxima crisis química.
+
+Eso no es interés, eso es ser el juguete de alguien que no tiene los huevos de enfrentar sus propios demonios sin arrastrarte a ti. Es patético de su parte y, aunque duela admitirlo, también es patético de tu parte seguir contestando. Porque cada vez que lo haces le confirmas que puede tratarte como basura y tú seguirás ahí, disponible para cuando le dé la gana.
+
+Tú no eres el premio de consolación de nadie. No eres la muleta emocional de un adicto funcional que solo sabe querer cuando está fuera de sí. Mereces a alguien que te busque a las once de la mañana porque de verdad le importas, no porque necesita un cuerpo caliente para no sentirse solo en su mierda.
+
+Si estás en ese ciclo, párate un segundo y sé honesto contigo: ¿de verdad quieres seguir siendo la opción fácil de alguien que ni siquiera te elige cuando está en sus cinco sentidos? Bloquéalo, bórralo, déjalo gritarle al vacío la próxima vez que esté volando. Duele al principio, claro, porque duele soltar la esperanza de que “algún día cambie”. Pero esa esperanza es veneno puro.
+
+Tú vales demasiado como para ser el entretenimiento nocturno de un cobarde emocional. Cuando dejes de contestar, vas a sentir un vacío raro, pero después va a llegar el alivio más grande del mundo: darte cuenta de que tu tiempo, tu cariño y tu atención son demasiado buenos para regalarlos a quien solo los quiere cuando está hecho mierda.
+
+Tú puedes vivir sin esas migajas. Y cuando lo hagas, vas a abrirle la puerta a alguien que te llame porque realmente te quiere, no porque las drogas le hicieron bajar la guardia. Ámate lo suficiente para mandarlo a la verga de una vez. Te lo mereces todo, no las sobras de nadie.",
             // LAS LETRAS AHORA SON SOLO UNA LISTA DE TEXTO, SIN TIEMPOS:
             lyrics: [
             "El espejo me dice que ya es hora de irme a casa",
