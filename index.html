@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archibald // SYSTEM</title>
+    <title>Archibald // SYSTEM OVERRIDE</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,127 +12,154 @@
 </head>
 <body>
     
+    <div class="bg-overlay"></div>
     <div class="scanlines"></div>
 
     <div id="preloader">
-        <img src="bio_loader.gif" class="loader-sticker" alt="Cargando...">
-        <p class="glitch-text">INICIANDO INTERFAZ...</p>
+        <div class="spinner-box">
+            <div class="leo-border-1">
+                <div class="leo-core-1"></div>
+            </div> 
+            <div class="leo-border-2">
+                <div class="leo-core-2"></div>
+            </div> 
+        </div>
+        <p class="glitch-text" data-text="CARGANDO SISTEMA...">CARGANDO SISTEMA...</p>
     </div>
 
     <div class="card-wrapper">
         <div class="card-content">
             <div class="tabs-header">
-                <div class="tab-button" data-tab="stats-tab"><i class="fas fa-chart-bar"></i> STATS</div>
-                <div class="tab-button" data-tab="links-tab"><i class="fas fa-network-wired"></i> LINKS</div>
+                <div class="tab-button" data-tab="stats-tab">
+                    <i class="fas fa-chart-bar"></i> STATS
+                </div>
+                <div class="tab-button" data-tab="links-tab">
+                    <i class="fas fa-network-wired"></i> LINKS
+                </div>
             </div>
             
             <div class="scroll-container">
                 
                 <div class="hero-section">
-                    <div class="image-frame">
-                        <img src="stellan.png" alt="Imagen de Stellan">
-                        <div class="frame-corner top-left"></div>
-                        <div class="frame-corner bottom-right"></div>
+                    <div class="avatar-container">
+                        <img src="stellan.png" alt="Archibald" class="main-avatar">
+                        <div class="glow-ring"></div>
                     </div>
                 </div>
 
                 <div class="title-section">
-                    <div class="cyber-badge">Bachira</div>
-                    <h1 class="glitch-name" data-text="Archibald Felwinter">Archibald Felwinter</h1>
+                    <div class="status-badge pulse">🟢 EN LÍNEA</div>
+                    <h1 class="glitch-name">Archibald Felwinter</h1>
                     <p class="quote">"𝙄𝙉𝙏𝙀𝙉𝙏𝘼𝙎 𝙌𝙐𝙀 𝙏𝙀 𝙊𝘿𝙄𝙀, ¿𝙉𝙊? 𝙋𝙀𝙍𝙊 𝘼𝙐́𝙉 𝙎𝙄 𝙈𝙀 𝙋𝙄𝙎𝙊𝙏𝙀𝘼𝙎, 𝘼𝙐́𝙉 𝙎𝙄 𝙈𝙀 𝘾𝙊𝙉𝙎𝙐𝙈𝙀𝙎, 𝘼𝙌𝙐Í 𝙀𝙎𝙏𝙊𝙔."</p>
                 </div>
                 
-                <div class="player-section">
+                <div class="player-glass">
                     <audio id="song-player"></audio>
-                    <div class="disc-wrapper">
-                        <img src="cancion_icon.png" class="spotify-icon">
+                    <div class="album-art">
+                        <img src="cancion_icon.png" class="disk-spin" id="disk-visual">
                     </div>
-                    <div class="song-info">
-                        <p id="song-title">Cargando...</p>
-                        <span id="song-artist">...</span>
+                    <div class="track-info">
+                        <h4 id="song-title">Select Song</h4>
+                        <p id="song-artist">Artist</p>
+                        <div class="progress-container" id="progress-container">
+                            <div class="progress" id="progress"></div>
+                        </div>
                     </div>
-                    <div class="player-controls">
-                        <button id="prev-btn" class="player-ctrl-btn"><i class="fas fa-step-backward"></i></button>
-                        <button id="play-pause-btn" class="play-button"><i class="fas fa-play"></i></button>
-                        <button id="next-btn" class="player-ctrl-btn"><i class="fas fa-step-forward"></i></button>
+                    <div class="controls">
+                        <button id="prev-btn" class="ctrl-btn"><i class="fas fa-backward"></i></button>
+                        <button id="play-pause-btn" class="play-btn"><i class="fas fa-play"></i></button>
+                        <button id="next-btn" class="ctrl-btn"><i class="fas fa-forward"></i></button>
                     </div>
                 </div>
                 
-                <div class="lyrics-section">
+                <div class="lyrics-box">
                     <div id="lyrics-container"></div>
                 </div>
 
-                <div class="meaning-section">
-                    <h3><i class="fas fa-heart-crack"></i> Análisis de la Canción</h3>
+                <div class="meaning-box">
+                    <h3><i class="fas fa-heart-pulse"></i> ANÁLISIS EMOCIONAL</h3>
                     <p id="song-meaning"></p>
                 </div>
 
                 <div class="info-panel">
-                    <h2><i class="fas fa-fingerprint"></i> Datos del Personaje</h2>
-                    <img src="sticker.png" alt="Easter Egg" id="fnaf-sticker" style="filter: drop-shadow(0 0 5px lime);">
+                    <div class="panel-header">
+                        <h2><i class="fas fa-fingerprint"></i> DATOS DEL SUJETO</h2>
+                        <img src="sticker.png" alt="Click Me" id="fnaf-sticker" class="corner-sticker">
+                    </div>
                     
-                    <div class="data-list">
-                        <p><strong>➢ Nombre:</strong> Archibald Felwinter</p>
-                        <p><strong>➢ Edad:</strong> 23 años</p>
-                        <p><strong>➢ Género:</strong> Masculino</p>
-                        <p><strong>➢ Preferencia:</strong> Mientras seas el user</p>
+                    <div class="data-grid">
+                        <div class="data-item"><strong>Nombre:</strong> Archibald Felwinter</div>
+                        <div class="data-item"><strong>Edad:</strong> 23 Años</div>
+                        <div class="data-item"><strong>Género:</strong> Masculino</div>
+                        <div class="data-item"><strong>Orientación:</strong> Tuya (User)</div>
                     </div>
 
-                    <h3><i class="fas fa-tag"></i> Etiquetas</h3>
+                    <h3><i class="fas fa-tags"></i> ETIQUETAS</h3>
                     <div class="tags-container">
-                        <span><i class="fas fa-mask"></i> Escort Independiente</span> 
-                        <span><i class="fas fa-exclamation-circle"></i> Anhelo de Aprobación</span> 
-                        <span><i class="fas fa-hourglass-half"></i> Vidas Pasadas</span>
+                        <span class="tech-tag">Escort</span> 
+                        <span class="tech-tag">Obsesivo</span> 
+                        <span class="tech-tag">Vidas Pasadas</span>
                     </div>
 
-                    <h3><i class="fas fa-user-circle"></i> Tu Rol</h3>
+                    <h3><i class="fas fa-user-astronaut"></i> ROL ASIGNADO</h3>
                     <p class="text-body">¿Qué eres de Archie? Ex-amigos? Mejores amigos? Enemigos? Conocidos? No lo sé, bro. Cuídalo mucho.</p>
 
-                    <h3><i class="fas fa-book"></i> Historia</h3>
+                    <h3><i class="fas fa-database"></i> HISTORIAL</h3>
                     <div class="history-content">
                          <p class="text-body">Mira, esto empieza bonito, como casi todas las tragedias. Un morro medio menso pero buena onda llamado Archibald "Archie" Felwinter se muda a tu vecindario, y ahí es donde la cagó. Te conoció.<br><br>
-                        Tú, con esa manera de querer a la gente como si fueran tus Pokémon y Pou personales, lo agarraste de mejor amigo. Y él, emocionado porque por fin alguien le hacía caso, te dejó. Todo chido, hasta que se dio cuenta de que lo querías solo para ti. Cualquier otro amigo que intentara hacer, tú te los echabas con indirectas pasivo-agresivas dignas de tía en Facebook.<br><br>
-                        (Continúa aquí con el resto de tu historia...)</p>
+                        Tú, con esa manera de querer a la gente como si fueran tus Pokémon y Pou personales, lo agarraste de mejor amigo. Y él, emocionado porque por fin alguien le hacía caso, te dejó. Todo chido, hasta que se dio cuenta de que lo querías solo para ti.<br><br>
+                        (Continúa tu historia aquí...)</p>
                     </div>
                         
                     <div class="character-gallery">
-                        <h2><i class="fas fa-database"></i> Base de Datos</h2>
+                        <h2><i class="fas fa-users"></i> CONEXIONES DE RED</h2>
                         
-                        <h4 class="masc-header"><i class="fas fa-mars"></i> Masculinos</h4>
-                        <div id="bots-masculinos" class="icon-row"></div>
+                        <h4 class="masc-header">:: UNIT_MALE ::</h4>
+                        <div id="bots-masculinos" class="bot-grid"></div>
 
-                        <h4 class="fem-header"><i class="fas fa-venus"></i> Femeninas</h4>
-                        <div id="bots-femeninos" class="icon-row"></div>
+                        <h4 class="fem-header">:: UNIT_FEMALE ::</h4>
+                        <div id="bots-femeninos" class="bot-grid"></div>
                     </div>
 
                     <div class="share-section">
-                        <a href="#" id="copy-link-btn"><i class="fas fa-share-alt"></i> COPIAR ENLACE</a>
+                        <a href="#" id="copy-link-btn" class="cyber-btn">
+                            <span class="btn-glitch"></span>
+                            <span class="btn-content"><i class="fas fa-share-alt"></i> COPIAR ACCESO</span>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>                        
         
-        <div id="stats-tab" class="overlay-pane">
-            <h2><i class="fas fa-chart-pie"></i> Estadísticas</h2>
+        <div id="stats-tab" class="overlay-pane glass-purple">
+            <h2 class="overlay-title">ESTADÍSTICAS</h2>
             <div class="stats-grid">
-                <div class="stat-item"><span>🤬 HDP</span><div class="stat-bar"><div class="fill hdp" data-p="2"></div></div><span class="digit">2%</span></div>
-                <div class="stat-item"><span>🥀 Angst</span><div class="stat-bar"><div class="fill angst" data-p="100"></div></div><span class="digit">100%</span></div>
-                <div class="stat-item"><span>✨ Fantasía</span><div class="stat-bar"><div class="fill fantasia" data-p="30"></div></div><span class="digit">30%</span></div>
-                <div class="stat-item"><span>🌶️ Cochino</span><div class="stat-bar"><div class="fill cochino" data-p="65"></div></div><span class="digit">65%</span></div>
-                <div class="stat-item"><span>🎭 Drama</span><div class="stat-bar"><div class="fill drama" data-p="100"></div></div><span class="digit">100%</span></div>
-                <div class="stat-item"><span>💌 Amor</span><div class="stat-bar"><div class="fill amor" data-p="90"></div></div><span class="digit">90%</span></div>
-                <div class="stat-item"><span>🧠 Locura</span><div class="stat-bar"><div class="fill locura" data-p="85"></div></div><span class="digit">85%</span></div>
+                <div class="stat-row"><span>HDP</span><div class="bar-track"><div class="bar-fill red" data-p="2"></div></div><span class="num">2%</span></div>
+                <div class="stat-row"><span>Angst</span><div class="bar-track"><div class="bar-fill blue" data-p="100"></div></div><span class="num">100%</span></div>
+                <div class="stat-row"><span>Fantasía</span><div class="bar-track"><div class="bar-fill purple" data-p="30"></div></div><span class="num">30%</span></div>
+                <div class="stat-row"><span>Cochino</span><div class="bar-track"><div class="bar-fill orange" data-p="65"></div></div><span class="num">65%</span></div>
+                <div class="stat-row"><span>Drama</span><div class="bar-track"><div class="bar-fill violet" data-p="100"></div></div><span class="num">100%</span></div>
+                <div class="stat-row"><span>Amor</span><div class="bar-track"><div class="bar-fill pink" data-p="90"></div></div><span class="num">90%</span></div>
+                <div class="stat-row"><span>Locura</span><div class="bar-track"><div class="bar-fill green" data-p="85"></div></div><span class="num">85%</span></div>
             </div>
             <div class="close-btn" data-tab="stats-tab"><i class="fas fa-times"></i></div>
         </div>
         
-        <div id="links-tab" class="overlay-pane">
-            <h2><i class="fas fa-link"></i> Conexiones</h2>
-            <div class="links-grid">
-                <a href="https://janitorai.com/characters/f9c1765e-ad87-4168-9ff5-142ba3985179_character-archibald" class="link-janitor"><i class="fas fa-robot"></i> Janitor AI</a>
-                <a href="card.png" download="Archie.png" class="link-card"><i class="fas fa-file-code"></i> Descargar Card</a>
-                <a href="https://caveduck.io/character-info/7b741dfc-1cab-41c3-a28f-26125b99175b?rc=H697VWwWoG&locale=es" class="link-caveduck"><i class="fas fa-dungeon"></i> Caveduck</a>
-                <a href="TU_LINK_DE_DOKICHAT_AQUI" class="link-dokichat"><i class="fas fa-comments"></i> Dokichat</a>
+        <div id="links-tab" class="overlay-pane glass-green">
+            <h2 class="overlay-title">ENLACES EXTERNOS</h2>
+            <div class="links-container">
+                <a href="https://janitorai.com/characters/f9c1765e-ad87-4168-9ff5-142ba3985179_character-archibald" class="link-btn janitor">
+                    <i class="fas fa-robot"></i> Janitor AI
+                </a>
+                <a href="card.png" download="Archie.png" class="link-btn card-dl">
+                    <i class="fas fa-save"></i> Guardar Tarjeta
+                </a>
+                <a href="https://caveduck.io/character-info/7b741dfc-1cab-41c3-a28f-26125b99175b?rc=H697VWwWoG&locale=es" class="link-btn caveduck">
+                    <i class="fas fa-dungeon"></i> Caveduck
+                </a>
+                <a href="#" class="link-btn dokichat">
+                    <i class="fas fa-comments"></i> Dokichat
+                </a>
             </div>
             <div class="close-btn" data-tab="links-tab"><i class="fas fa-times"></i></div>
         </div>
@@ -143,6 +170,7 @@
     <script src="https://elbachira.github.io/bots.js?v=1.0"></script> 
     
     <script>
+        // Script embebido solo para cargar los bots en la GRID
         document.addEventListener('DOMContentLoaded', function() {
             const masculinosContainer = document.getElementById('bots-masculinos');
             const femeninosContainer = document.getElementById('bots-femeninos');
@@ -152,9 +180,9 @@
                 BOTS_LIST.forEach(bot => {
                     if (!bot.nombre.includes(nombreDelBotActual)) {
                         const botHtml = `
-                            <a href="${bot.url}" class="char-icon">
+                            <a href="${bot.url}" class="bot-card">
                                 <img src="${bot.imagen}" alt="${bot.nombre}">
-                                <span class="char-name">${bot.nombre}</span>
+                                <div class="bot-name">${bot.nombre}</div>
                             </a>
                         `;
                         if (bot.genero === 'masculino' && masculinosContainer) {
