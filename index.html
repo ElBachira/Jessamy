@@ -1,243 +1,220 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archibald // SYSTEM OVERRIDE</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    
-    <div class="bg-overlay"></div>
-    <div class="scanlines"></div>
-    <div class="vignette"></div>
+<!-- FONTS: Importamos fuentes tecnológicas y limpias -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <div id="preloader">
-        <div class="loader-content">
-            <img src="https://i.gifer.com/origin/34/34338d26023e5515f6cc8969aa027bca_w200.gif" class="loader-gif" alt="Cargando...">
-            <div class="loading-bar"><div class="bar-fill"></div></div>
-            <p class="glitch-text" data-text="CARGANDO SISTEMA...">CARGANDO SISTEMA...</p>
-        </div>
+<!-- AUDIO (Invisible, controlado por JS) -->
+<audio id="bg-music" loop>
+  <source src="https://files.catbox.moe/tucancionaqui.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PRELOADER -->
+<div id="preloader">
+    <div class="loader-content">
+        <img src="https://files.catbox.moe/tustickeraqui.png" alt="Loading..." class="loader-sticker">
+        <div class="loader-bar"><div class="bar-fill"></div></div>
+        <p class="glitch-text" data-text="INICIANDO SISTEMA...">INICIANDO SISTEMA...</p>
     </div>
+</div>
 
-    <div class="card-wrapper">
-        
-        <div class="card-header">
-            <div class="status-dot"></div>
-            <div class="header-title">ARCHIE_OS v2.0</div>
-            <div class="tabs-container">
-                <button class="tab-btn" onclick="openModal('stats-modal')"><i class="fas fa-chart-pie"></i> STATS</button>
-                <button class="tab-btn" onclick="openModal('links-modal')"><i class="fas fa-link"></i> LINKS</button>
+<!-- FONDO ANIMADO Y SCANLINES -->
+<div class="bio-background"></div>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+
+<!-- CONTENEDOR PRINCIPAL (HOLO-PAD) -->
+<main class="holo-pad">
+
+    <!-- BARRA SUPERIOR (NAV) -->
+    <nav class="top-nav">
+        <button class="nav-btn" onclick="toggleModal('stats-modal')"><i class="fas fa-chart-bar"></i> STATS</button>
+        <div class="status-light"></div>
+        <button class="nav-btn" onclick="toggleModal('links-modal')"><i class="fas fa-network-wired"></i> LINKS</button>
+    </nav>
+
+    <!-- ÁREA DE SCROLL PRINCIPAL -->
+    <div class="scroll-content">
+
+        <!-- FOTO DE PERFIL CON EFECTO GLITCH -->
+        <div class="profile-section">
+            <div class="hex-frame">
+                <img src="https://files.catbox.moe/tuimagenarchie.jpg" alt="Archie" class="profile-img">
+                <div class="frame-decor top-l"></div>
+                <div class="frame-decor bot-r"></div>
             </div>
+            <span class="rank-badge">Bachira</span>
         </div>
 
-        <div class="scroll-container">
-            
-            <div class="profile-section">
-                <div class="avatar-frame">
-                    <img src="stellan.png" alt="Archibald" class="avatar-img">
-                    <div class="scanner-line"></div>
-                </div>
-                <img src="sticker.png" id="fnaf-sticker" class="sticker-float" alt="Honk!">
-            </div>
+        <!-- NOMBRE Y CITA -->
+        <header class="char-header">
+            <h1 class="neon-title">ARCHIBALD<br><span class="lastname">FELWINTER</span></h1>
+            <p class="quote">"INTENTAS QUE TE ODIE, ¿NO? PERO AÚN SI ME PISOTEAS, AÚN SI ME CONSUMES, AQUÍ ESTOY."</p>
+        </header>
 
-            <div class="bio-header">
-                <span class="badge-role">Bachira</span>
-                <h1 class="neon-title">Archibald Felwinter</h1>
-                <p class="quote-text">"Intentas que te odie, ¿no? Pero aún si me pisoteas, aquí estoy."</p>
-            </div>
-
-            <div class="music-player-glass">
+        <!-- REPRODUCTOR DE MÚSICA -->
+        <section class="music-player">
+            <div class="player-main">
+                <div class="album-art spin-art"><i class="fab fa-spotify"></i></div>
                 <div class="track-info">
-                    <div class="vinyl-icon spin-animation"><i class="fas fa-music"></i></div>
-                    <div class="track-text">
-                        <h4 id="song-title">Cargando...</h4>
-                        <span id="song-artist">...</span>
-                    </div>
+                    <h3 id="track-name">Why'd You Only Call Me When You're High</h3>
+                    <p>Arctic Monkeys</p>
                 </div>
-                
-                <div class="progress-area">
-                    <div class="progress-bar" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-                </div>
-
                 <div class="controls">
-                    <button id="btn-prev" class="ctrl-btn"><i class="fas fa-backward"></i></button>
-                    <button id="btn-play" class="play-btn-main"><i class="fas fa-play"></i></button>
-                    <button id="btn-next" class="ctrl-btn"><i class="fas fa-forward"></i></button>
+                    <button class="ctrl-btn"><i class="fas fa-step-backward"></i></button>
+                    <button class="play-btn" id="play-pause"><i class="fas fa-play"></i></button>
+                    <button class="ctrl-btn"><i class="fas fa-step-forward"></i></button>
                 </div>
+            </div>
 
-                <button class="toggle-lyrics-btn" id="toggle-lyrics">
-                    Ver Letra y Significado <i class="fas fa-chevron-down"></i>
+            <!-- ACORDEONES (Plegables) -->
+            <div class="accordion">
+                <button class="accordion-btn" onclick="toggleAccordion('lyrics-panel')">
+                    <i class="fas fa-align-left"></i> Ver Letra <i class="fas fa-chevron-down arrow"></i>
                 </button>
+                <div id="lyrics-panel" class="accordion-content">
+                    <p class="lyrics-text">
+                        The mirror's image tells me it's home time<br>
+                        But I'm not finished 'cause you're not by my side<br>
+                        ...<br>
+                        Why'd you only call me when you're high?
+                    </p>
+                </div>
 
-                <div class="lyrics-accordion" id="lyrics-content">
-                    <div class="glass-box meaning-box">
-                        <h3><i class="fas fa-brain"></i> Análisis Mental</h3>
-                        <p id="song-meaning">...</p>
-                    </div>
-                    <div class="glass-box lyrics-box">
-                        <div id="lyrics-text"></div>
-                    </div>
+                <button class="accordion-btn" onclick="toggleAccordion('meaning-panel')">
+                    <i class="fas fa-brain"></i> Análisis de la Canción <i class="fas fa-chevron-down arrow"></i>
+                </button>
+                <div id="meaning-panel" class="accordion-content">
+                    <p class="meaning-text">
+                        ¿Alguna vez has contestado una llamada a las tres de la mañana sabiendo perfectamente que al otro lado hay alguien que solo te recuerda cuando las drogas le aflojan la lengua...
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- INFORMACIÓN (DATOS) -->
+        <section class="bio-data">
+            <div class="section-title">
+                <i class="fas fa-fingerprint"></i> DATOS DEL PERSONAJE
+            </div>
+
+            <div class="data-grid">
+                <div class="data-row">
+                    <span class="label"><i class="fas fa-angle-right"></i> Nombre:</span>
+                    <span class="value">Archibald Felwinter</span>
+                </div>
+                <div class="data-row">
+                    <span class="label"><i class="fas fa-angle-right"></i> Edad:</span>
+                    <span class="value">23 años</span>
+                </div>
+                <div class="data-row">
+                    <span class="label"><i class="fas fa-angle-right"></i> Género:</span>
+                    <span class="value">Masculino</span>
+                </div>
+                <div class="data-row">
+                    <span class="label"><i class="fas fa-angle-right"></i> Preferencia:</span>
+                    <span class="value">Mientras seas el user</span>
                 </div>
             </div>
 
-            <div class="info-grid">
-                <div class="info-item">
-                    <i class="fas fa-user-tag icon-accent"></i>
-                    <div>
-                        <span class="label">Nombre</span>
-                        <span class="value">Archibald Felwinter</span>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-hourglass-start icon-accent"></i>
-                    <div>
-                        <span class="label">Edad</span>
-                        <span class="value">23 Años</span>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-venus-mars icon-accent"></i>
-                    <div>
-                        <span class="label">Género</span>
-                        <span class="value">Masculino</span>
-                    </div>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-heart icon-accent"></i>
-                    <div>
-                        <span class="label">Preferencia</span>
-                        <span class="value">Tú (El User)</span>
-                    </div>
+            <!-- ETIQUETAS (TAGS) -->
+            <div class="tags-cloud">
+                <div class="section-subtitle"><i class="fas fa-tags"></i> Etiquetas</div>
+                <span class="tag">Escort Independiente</span>
+                <span class="tag">Anhelo de Aprobación</span>
+                <span class="tag">Vidas Pasadas</span>
+                <span class="tag">Masoquismo Emocional</span>
+            </div>
+
+            <!-- ROL Y HISTORIA -->
+            <div class="narrative-box">
+                <h3 class="box-title"><i class="fas fa-user-circle"></i> Tu Rol</h3>
+                <p>¿Qué eres de Archie? ¿Ex-amigos? ¿Mejores amigos? ¿Enemigos? Conocidos? No lo sé, bro. Cuídalo mucho.</p>
+            </div>
+
+            <div class="narrative-box">
+                <h3 class="box-title"><i class="fas fa-book"></i> Historia</h3>
+                <div class="scroll-text">
+                    <p>Mira, esto empieza bonito, como casi todas las tragedias. Un morro medio menso pero buena onda llamado Archibald "Archie" Felwinter se muda a tu vecindario, y ahí es donde la cagó. Te conoció.</p>
+                    <p>Tú, con esa manera de querer a la gente como si fueran tus Pokémon y Pou personales, lo agarraste de mejor amigo. Y él, emocionado porque por fin alguien le hacía caso, te dejó. Todo chido, hasta que se dio cuenta de que lo querías solo para ti. Cualquier otro amigo que intentara hacer, tú te los echabas con indirectas pasivo-agresivas dignas de tía en Facebook.</p>
                 </div>
             </div>
 
-            <div class="tags-section">
-                <h3><i class="fas fa-fingerprint"></i> ETIQUETAS</h3>
-                <div class="tags-cloud">
-                    <span class="tag tag-purple"><i class="fas fa-mask"></i> Escort Independiente</span>
-                    <span class="tag tag-red"><i class="fas fa-exclamation-triangle"></i> Anhelo de Aprobación</span>
-                    <span class="tag tag-green"><i class="fas fa-history"></i> Vidas Pasadas</span>
+            <!-- GALERÍA DE BOTS (BASE DE DATOS) -->
+            <div class="bot-gallery">
+                <div class="section-title"><i class="fas fa-database"></i> BASE DE DATOS</div>
+
+                <h4><i class="fas fa-mars"></i> Masculinos</h4>
+                <div class="gallery-grid">
+                    <a href="#" class="char-thumb"><img src="https://files.catbox.moe/img1.jpg"><span>Alejandro</span></a>
+                    <a href="#" class="char-thumb"><img src="https://files.catbox.moe/img2.jpg"><span>Drexler</span></a>
+                    <a href="#" class="char-thumb locked"><i class="fas fa-lock"></i><span>Edward</span></a>
+                </div>
+
+                <h4><i class="fas fa-venus"></i> Femeninas</h4>
+                <div class="gallery-grid">
+                    <!-- Agrega tus chicas aquí -->
+                    <div class="empty-slot">Vacío</div>
                 </div>
             </div>
 
-            <div class="story-section glass-panel">
-                <h3><i class="fas fa-book-dead"></i> TU ROL</h3>
-                <p>¿Qué eres de Archie? Ex-amigos? Mejores amigos? Enemigos? Conocidos? No lo sé, bro. Cuídalo mucho.</p>
-                <div class="divider-neon"></div>
-                <h3><i class="fas fa-biohazard"></i> HISTORIA</h3>
-                <p>Mira, esto empieza bonito, como casi todas las tragedias. Un morro medio menso pero buena onda llamado Archibald "Archie" Felwinter se muda a tu vecindario, y ahí es donde la cagó. Te conoció.</p>
-                <p>Tú, con esa manera de querer a la gente como si fueran tus Pokémon y Pou personales, lo agarraste de mejor amigo. Y él, emocionado porque por fin alguien le hacía caso, te dejó. Todo chido, hasta que se dio cuenta de que lo querías solo para ti.</p>
-            </div>
+        </section>
 
-            <div class="database-section">
-                <h3 class="db-title">Base de Datos // CONEXIONES</h3>
-                
-                <h4 class="sub-header-masc">Subject: MASCULINO</h4>
-                <div id="bots-masculinos" class="bot-grid"></div>
-
-                <h4 class="sub-header-fem">Subject: FEMENINO</h4>
-                <div id="bots-femeninos" class="bot-grid"></div>
-            </div>
-
-            <br><br>
-        </div>
-
-        <button id="share-fab" class="share-fab">
-            <i class="fas fa-share-alt"></i>
-        </button>
+        <!-- BOTÓN FINAL -->
+        <button id="share-btn" class="mega-btn"><i class="fas fa-share-alt"></i> COPIAR ENLACE</button>
+        <div class="spacer"></div>
     </div>
 
+    <!-- MODAL STATS (OVERLAY) -->
     <div id="stats-modal" class="modal-overlay">
-        <div class="modal-glass">
-            <button class="close-modal" onclick="closeModal('stats-modal')">&times;</button>
-            <h2><i class="fas fa-chart-line"></i> Estadísticas Vitales</h2>
-            <div class="stats-container-vertical">
-                <div class="stat-row">
-                    <span>🤬 HDP</span>
-                    <div class="bar-bg"><div class="bar-fill color-hdp" style="width: 2%"></div></div>
-                    <span class="perc">2%</span>
+        <button class="close-modal" onclick="toggleModal('stats-modal')"><i class="fas fa-times"></i></button>
+        <div class="modal-content glass-panel">
+            <h2><i class="fas fa-chart-pie"></i> Estadísticas</h2>
+            <div class="stats-container">
+                <!-- Barras -->
+                <div class="stat-group">
+                    <div class="stat-info"><span><i class="fas fa-angry"></i> HDP</span> <span class="percent">2%</span></div>
+                    <div class="progress-bg"><div class="progress-fill red" style="width: 2%;"></div></div>
                 </div>
-                <div class="stat-row">
-                    <span>🥀 Angst</span>
-                    <div class="bar-bg"><div class="bar-fill color-angst" style="width: 100%"></div></div>
-                    <span class="perc">100%</span>
+                <div class="stat-group">
+                    <div class="stat-info"><span><i class="fas fa-heart-broken"></i> Angst</span> <span class="percent">100%</span></div>
+                    <div class="progress-bg"><div class="progress-fill blue" style="width: 100%;"></div></div>
                 </div>
-                <div class="stat-row">
-                    <span>🌶️ Cochino</span>
-                    <div class="bar-bg"><div class="bar-fill color-cochino" style="width: 65%"></div></div>
-                    <span class="perc">65%</span>
+                <div class="stat-group">
+                    <div class="stat-info"><span><i class="fas fa-hat-wizard"></i> Fantasía</span> <span class="percent">30%</span></div>
+                    <div class="progress-bg"><div class="progress-fill purple" style="width: 30%;"></div></div>
                 </div>
-                <div class="stat-row">
-                    <span>🎭 Drama</span>
-                    <div class="bar-bg"><div class="bar-fill color-drama" style="width: 100%"></div></div>
-                    <span class="perc">100%</span>
+                <div class="stat-group">
+                    <div class="stat-info"><span><i class="fas fa-pepper-hot"></i> Cochino</span> <span class="percent">65%</span></div>
+                    <div class="progress-bg"><div class="progress-fill orange" style="width: 65%;"></div></div>
                 </div>
-                <div class="stat-row">
-                    <span>💌 Amor</span>
-                    <div class="bar-bg"><div class="bar-fill color-amor" style="width: 90%"></div></div>
-                    <span class="perc">90%</span>
+                <div class="stat-group">
+                    <div class="stat-info"><span><i class="fas fa-masks-theater"></i> Drama</span> <span class="percent">100%</span></div>
+                    <div class="progress-bg"><div class="progress-fill violet" style="width: 100%;"></div></div>
                 </div>
-                <div class="stat-row">
-                    <span>🧠 Locura</span>
-                    <div class="bar-bg"><div class="bar-fill color-locura" style="width: 85%"></div></div>
-                    <span class="perc">85%</span>
+                <div class="stat-group">
+                    <div class="stat-info"><span><i class="fas fa-envelope"></i> Amor</span> <span class="percent">90%</span></div>
+                    <div class="progress-bg"><div class="progress-fill pink" style="width: 90%;"></div></div>
+                </div>
+                <div class="stat-group">
+                    <div class="stat-info"><span><i class="fas fa-brain"></i> Locura</span> <span class="percent">85%</span></div>
+                    <div class="progress-bg"><div class="progress-fill green" style="width: 85%;"></div></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- MODAL LINKS (OVERLAY) -->
     <div id="links-modal" class="modal-overlay">
-        <div class="modal-glass">
-            <button class="close-modal" onclick="closeModal('links-modal')">&times;</button>
-            <h2><i class="fas fa-link"></i> Enlaces Neurales</h2>
-            <div class="links-grid-modern">
-                <a href="https://janitorai.com/characters/..." target="_blank" class="cyber-btn">
-                    <i class="fas fa-robot"></i> Janitor AI
-                </a>
-                <a href="card.png" download class="cyber-btn">
-                    <i class="fas fa-save"></i> Descargar Card
-                </a>
-                <a href="https://caveduck.io/..." target="_blank" class="cyber-btn">
-                    <i class="fas fa-dungeon"></i> Caveduck
-                </a>
-                <a href="#" target="_blank" class="cyber-btn">
-                    <i class="fas fa-comments"></i> Dokichat
-                </a>
+        <button class="close-modal" onclick="toggleModal('links-modal')"><i class="fas fa-times"></i></button>
+        <div class="modal-content glass-panel">
+            <h2><i class="fas fa-link"></i> Conexiones</h2>
+            <div class="links-list">
+                <a href="#" class="link-item"><i class="fas fa-robot"></i> JANITOR AI</a>
+                <a href="#" class="link-item"><i class="fas fa-file-download"></i> DESCARGAR CARD</a>
+                <a href="#" class="link-item"><i class="fas fa-dungeon"></i> CAVEDUCK</a>
+                <a href="#" class="link-item"><i class="fas fa-comments"></i> DOKICHAT</a>
             </div>
         </div>
     </div>
 
-    <audio id="audio-player"></audio>
-    <audio id="fnaf-sound" src="honk.mp3"></audio> 
+</main>
 
-    <script src="script.js"></script>
-    <script src="https://elbachira.github.io/bots.js?v=1.0"></script>
-    
-    <script>
-        // Carga de bots (Script embebido para asegurar funcionalidad)
-        document.addEventListener('DOMContentLoaded', function() {
-            const mascContainer = document.getElementById('bots-masculinos');
-            const femContainer = document.getElementById('bots-femeninos');
-            
-            if (typeof BOTS_LIST !== 'undefined' && Array.isArray(BOTS_LIST)) {
-                BOTS_LIST.forEach(bot => {
-                    if (!bot.nombre.includes("Archibald")) {
-                        const botHtml = `
-                            <a href="${bot.url}" class="bot-card" target="_blank">
-                                <img src="${bot.imagen}" loading="lazy" alt="${bot.nombre}">
-                                <div class="bot-name">${bot.nombre}</div>
-                            </a>
-                        `;
-                        if (bot.genero === 'masculino') mascContainer.innerHTML += botHtml;
-                        else if (bot.genero === 'femenino') femContainer.innerHTML += botHtml;
-                    }
-                });
-            }
-        });
-    </script>
-</body>
-</html>
