@@ -1,134 +1,122 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 0. PANTALLA DE CARGA ---
-    const loader = document.getElementById('loader-screen');
+    // --- 1. PANTALLA DE CARGA ---
+    const loader = document.getElementById('loader');
+    
+    // Simular tiempo de carga para efecto dramático
     setTimeout(() => {
         loader.style.opacity = '0';
         setTimeout(() => {
-            loader.style.visibility = 'hidden';
-            // Iniciar animaciones de entrada
-            document.querySelector('.hero-section').classList.add('fade-in');
-        }, 1000);
-    }, 2500); // Tiempo de carga falso de 2.5s
+            loader.style.display = 'none';
+        }, 800);
+    }, 2000); // 2 segundos de carga
 
-    // --- 1. EFECTO TILT 3D (Solo en PC) ---
-    const card = document.getElementById('main-card');
-    document.addEventListener('mousemove', (e) => {
-        if (window.innerWidth > 768) {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        }
-    });
-
-    // --- 2. CARGA DE BOTS ---
-    const maleGrid = document.getElementById('bots-masculinos');
-    const femaleGrid = document.getElementById('bots-femeninos');
-    
-    // Simulación si no existe el archivo externo
-    const BOTS_FALLBACK = [
-        { nombre: "Alejandro", genero: "masculino", imagen: "https://i.pinimg.com/564x/23/e4/20/23e4209c122396342898950293673197.jpg", url: "#" },
-        { nombre: "Drexler", genero: "masculino", imagen: "https://i.pinimg.com/564x/a0/0a/63/a00a6311e6498f3239a031940a430588.jpg", url: "#" },
-        { nombre: "Lilith", genero: "femenino", imagen: "https://i.pinimg.com/564x/5f/88/4a/5f884a0d81e09d174780287126285434.jpg", url: "#" }
-    ];
-
-    const listToUse = (typeof BOTS_LIST !== 'undefined') ? BOTS_LIST : BOTS_FALLBACK;
-
-    listToUse.forEach(bot => {
-        const botItem = document.createElement('a');
-        botItem.href = bot.url;
-        botItem.className = 'bot-item';
-        botItem.innerHTML = `<img src="${bot.imagen}" loading="lazy" alt="${bot.nombre}">`;
-        
-        if (bot.genero === 'masculino') maleGrid.appendChild(botItem);
-        else if (bot.genero === 'femenino') femaleGrid.appendChild(botItem);
-    });
-
-    // --- 3. REPRODUCTOR DE MÚSICA ---
+    // --- 2. SISTEMA DE REPRODUCTOR DE MÚSICA ---
     const songs = [
         {
             title: "Why'd You Only Call Me When You're High",
             artist: "Arctic Monkeys",
-            src: "song.mp3", 
-            cover: "cancion_icon.png",
-            lyrics: "The mirror's image tells me it's home time...",
-            meaning: "Refleja la toxicidad nocturna..."
+            src: "song.mp3", // ASEGURA QUE ESTE ARCHIVO EXISTA
+            lyrics: "The mirror's image tells me it's home time\nBut I'm not finished 'cause you're not by my side...",
+            meaning: "Refleja la dependencia tóxica de Archie. Él sabe que es una opción de madrugada, pero su soledad lo obliga a contestar."
         }
+        // Agrega más canciones aquí si quieres
     ];
 
     let currentIdx = 0;
     const audio = document.getElementById('audio-player');
     const playBtn = document.getElementById('play-pause-btn');
-    const coverEl = document.getElementById('album-art-img');
+    const playerContainer = document.querySelector('.music-player-container');
+    
+    // Elementos de texto
     const titleEl = document.getElementById('song-title');
     const artistEl = document.getElementById('song-artist');
+    const lyricsEl = document.getElementById('lyrics-content');
+    const meaningEl = document.getElementById('meaning-content');
+
+    function loadSong(index) {
+        const s = songs[index];
+        titleEl.innerText = s.title;
+        artistEl.innerText = s.artist;
+        audio.src = s.src;
+        lyricsEl.innerText = s.lyrics;
+        meaningEl.innerText = s.meaning;
+    }
+
+    // Cargar inicial
+    loadSong(currentIdx);
 
     playBtn.addEventListener('click', () => {
         if (audio.paused) {
-            audio.play().catch(e => console.log("Audio no encontrado, pon 'song.mp3' en la carpeta"));
-            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            coverEl.style.animationPlayState = "running";
-            document.querySelector('.equalizer-top').style.opacity = "1";
+            audio.play().then(() => {
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playerContainer.classList.add('playing');
+            }).catch(e => console.log("Error de autoplay (usuario debe interactuar):", e));
         } else {
             audio.pause();
             playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            coverEl.style.animationPlayState = "paused";
-            document.querySelector('.equalizer-top').style.opacity = "0.3";
+            playerContainer.classList.remove('playing');
         }
     });
 
-    // Cargar datos iniciales
-    titleEl.innerText = songs[0].title;
-    artistEl.innerText = songs[0].artist;
-    // Si tienes los archivos, descomenta:
-    // audio.src = songs[0].src; 
-    // coverEl.src = songs[0].cover;
+    // --- 3. GALERÍA DE BOTS ---
+    const maleGrid = document.getElementById('bots-masculinos');
+    const femaleGrid = document.getElementById('bots-femeninos');
+    const myName = "Archibald"; // Para no auto-listarse
 
-    // --- 4. STICKER INTERACTIVO ---
-    const sticker = document.getElementById('fnaf-sticker');
-    const honkSound = new Audio('https://www.myinstants.com/media/sounds/honk-sound.mp3'); 
-    
-    sticker.addEventListener('click', () => {
-        honkSound.currentTime = 0; honkSound.volume = 0.5; honkSound.play();
-        sticker.style.transform = "scale(0.8) rotate(-10deg)";
-        setTimeout(() => sticker.style.transform = "scale(1) rotate(0deg)", 150);
-        
-        // Efecto confeti simple (opcional)
-        createConfetti(sticker.getBoundingClientRect().left, sticker.getBoundingClientRect().top);
-    });
+    // Verificamos si BOTS_LIST existe (del script externo)
+    if (typeof BOTS_LIST !== 'undefined' && Array.isArray(BOTS_LIST)) {
+        BOTS_LIST.forEach(bot => {
+            if (!bot.nombre.includes(myName)) {
+                const item = document.createElement('a');
+                item.href = bot.url || '#';
+                item.className = 'bot-item';
+                // Añadimos un efecto de retardo aleatorio para la aparición
+                item.style.animation = `fadeIn 0.5s ease forwards ${Math.random()}s`;
+                
+                item.innerHTML = `
+                    <img src="${bot.imagen}" loading="lazy" alt="${bot.nombre}">
+                    <span>${bot.nombre}</span>
+                `;
 
-    function createConfetti(x, y) {
-        // Lógica simple para visual
-        console.log("Honk! 🎉");
+                if (bot.genero === 'masculino') maleGrid.appendChild(item);
+                else femaleGrid.appendChild(item);
+            }
+        });
+    } else {
+        // Fallback visual si no carga la lista
+        maleGrid.innerHTML = '<p style="color:#555; font-size:0.8rem;">Sin conexión a la base de datos...</p>';
     }
 
-    // --- 5. OVERLAYS Y ACORDEONES ---
-    window.openOverlay = function(id) {
-        const overlay = document.getElementById(id);
-        overlay.classList.add('active');
+    // --- 4. STICKER INTERACTIVO (HONK) ---
+    const sticker = document.getElementById('honk-sticker');
+    const honkAudio = new Audio('https://www.myinstants.com/media/sounds/honk-sound.mp3');
+    
+    sticker.addEventListener('click', () => {
+        honkAudio.currentTime = 0;
+        honkAudio.volume = 0.5;
+        honkAudio.play();
         
-        // Animar barras de progreso si es Stats
-        if (id === 'stats-tab') {
-            setTimeout(() => {
-                document.querySelector('.s-angst').style.width = '100%';
-                document.querySelector('.s-lewd').style.width = '65%';
-                document.querySelector('.s-mad').style.width = '85%';
-                document.querySelector('.s-love').style.width = '90%';
-            }, 300);
-        }
+        // Animación JS simple
+        sticker.style.transform = "scale(0.8) rotate(-20deg)";
+        setTimeout(() => sticker.style.transform = "scale(1) rotate(0deg)", 150);
+    });
+
+    // --- 5. UTILIDADES UI (Tabs & Acordeones) ---
+    window.openOverlay = (id) => {
+        document.getElementById(id).classList.add('active');
     };
     
-    window.closeOverlay = function(id) {
-        const overlay = document.getElementById(id);
-        overlay.classList.remove('active');
-        
-        if (id === 'stats-tab') {
-            document.querySelectorAll('.bar-fill').forEach(b => b.style.width = '0');
-        }
+    window.closeOverlay = (id) => {
+        document.getElementById(id).classList.remove('active');
     };
 
-    window.toggleFold = function(id) {
+    window.toggleFold = (id) => {
         const el = document.getElementById(id);
-        el.classList.toggle('open');
+        // Cierra los otros si quieres comportamiento de acordeón estricto
+        document.querySelectorAll('.foldable').forEach(f => {
+            if(f.id !== id) f.classList.remove('active');
+        });
+        el.classList.toggle('active');
     };
 });
