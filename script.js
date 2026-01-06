@@ -1,149 +1,121 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-    // --- 1. PRELOADER ---
+    // 1. PRELOADER
+    const preloader = document.getElementById('preloader');
     setTimeout(() => {
-        document.getElementById('preloader').classList.add('loaded');
-    }, 1500);
+        preloader.style.opacity = '0';
+        setTimeout(() => { preloader.style.display = 'none'; }, 500);
+    }, 2000);
 
-    // --- 2. LOGICA DEL REPRODUCTOR (FIX COMPLETO) ---
-    const audio = document.getElementById('song-player');
-    const playBtn = document.getElementById('play-pause-btn');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const titleEl = document.getElementById('song-title');
-    const artistEl = document.getElementById('song-artist');
-    const diskVisual = document.getElementById('disk-visual');
-    const progressBar = document.getElementById('progress');
-    const progressContainer = document.getElementById('progress-container');
-    const lyricsContainer = document.getElementById('lyrics-container');
-    const meaningContainer = document.getElementById('song-meaning');
-
-    const songs = [
-        {
-            title: "Why'd You Only Call Me When You're High",
-            artist: "Arctic Monkeys",
-            src: "song.mp3", // ASEGURATE DE QUE ESTE ARCHIVO EXISTA
-            meaning: "Una reflexión sobre la soledad y el deseo tóxico a altas horas de la madrugada...",
-            lyrics: [
-                "The mirror's image tells me it's home time",
-                "But I'm not finished 'cause you're not by my side",
-                "As I arrived I thought I saw you leaving",
-                "Carrying your shoes",
-                "Decided that once again I was just dreaming",
-                "Now it's three in the morning",
-                "And I'm trying to change your mind",
-                "Why'd you only call me when you're high?"
-            ]
-        }
-        // Agrega más canciones aquí si quieres
-    ];
-
-    let songIndex = 0;
-
-    function loadSong(song) {
-        titleEl.innerText = song.title;
-        artistEl.innerText = song.artist;
-        audio.src = song.src;
-        meaningContainer.innerText = song.meaning;
-
-        // Cargar letras
-        lyricsContainer.innerHTML = '';
-        song.lyrics.forEach(line => {
-            const p = document.createElement('p');
-            p.innerText = line;
-            lyricsContainer.appendChild(p);
-        });
-    }
-
-    function playSong() {
-        playBtn.querySelector('i').classList.remove('fa-play');
-        playBtn.querySelector('i').classList.add('fa-pause');
-        diskVisual.classList.add('spinning'); // Hace girar el disco
-        audio.play();
-    }
-
-    function pauseSong() {
-        playBtn.querySelector('i').classList.remove('fa-pause');
-        playBtn.querySelector('i').classList.add('fa-play');
-        diskVisual.classList.remove('spinning'); // Detiene el disco
-        audio.pause();
-    }
-
-    playBtn.addEventListener('click', () => {
-        const isPlaying = playBtn.querySelector('i').classList.contains('fa-pause');
-        if (isPlaying) {
-            pauseSong();
-        } else {
-            playSong();
-        }
-    });
-
-    // Barra de progreso
-    audio.addEventListener('timeupdate', (e) => {
-        const { duration, currentTime } = e.srcElement;
-        const progressPercent = (currentTime / duration) * 100;
-        progressBar.style.width = `${progressPercent}%`;
-    });
-
-    // Clic en la barra para saltar
-    progressContainer.addEventListener('click', (e) => {
-        const width = progressContainer.clientWidth;
-        const clickX = e.offsetX;
-        const duration = audio.duration;
-        audio.currentTime = (clickX / width) * duration;
-    });
-
-    // Cargar canción inicial
-    loadSong(songs[songIndex]);
-
-
-    // --- 3. LOGICA DE TABS (PESTAÑAS) Y OVERLAYS ---
+    // 2. TABS & OVERLAYS
     const tabButtons = document.querySelectorAll('.tab-button');
     const closeButtons = document.querySelectorAll('.close-btn');
 
     tabButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            const tabId = btn.getAttribute('data-tab');
-            document.getElementById(tabId).classList.add('active');
+            const targetId = btn.dataset.tab;
+            const overlay = document.getElementById(targetId);
+            overlay.classList.add('active');
             
-            // Si es Stats, animar barras
-            if(tabId === 'stats-tab') {
-                setTimeout(() => {
-                    document.querySelectorAll('.bar-fill').forEach(bar => {
-                        bar.style.width = bar.getAttribute('data-p') + '%';
-                    });
-                }, 300);
+            // Si abrimos Stats, animar las barras
+            if (targetId === 'stats-tab') {
+                const fills = document.querySelectorAll('.stat-fill');
+                fills.forEach(fill => {
+                    // Reseteamos el ancho para que anime de nuevo
+                    const targetWidth = fill.style.width;
+                    fill.style.width = '0';
+                    setTimeout(() => { fill.style.width = targetWidth; }, 100);
+                });
             }
         });
     });
 
     closeButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Cerrar el panel
-            btn.closest('.overlay-pane').classList.remove('active');
-            // Resetear barras para próxima animación
-            document.querySelectorAll('.bar-fill').forEach(bar => bar.style.width = '0%');
+            const overlay = document.getElementById(btn.dataset.target);
+            overlay.classList.remove('active');
         });
     });
 
-    // --- 4. SONIDOS FX ---
-    const clickFx = new Audio('https://www.fesliyanstudios.com/play-mp3/387');
-    document.querySelectorAll('button, a, .tab-button').forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            // Opcional: Sonido al pasar mouse
-        });
-        el.addEventListener('click', () => {
-            clickFx.currentTime = 0;
-            clickFx.play().catch(e=>{});
-        });
-    });
+    // 3. REPRODUCTOR DE MÚSICA (Lógica Real)
+    const audio = document.getElementById('song-player');
+    const playBtn = document.getElementById('play-pause-btn');
+    const icon = playBtn.querySelector('i');
+    const progressBar = document.getElementById('progress-fill');
     
-    // --- 5. STICKER INTERACTIVO ---
-    const sticker = document.getElementById('fnaf-sticker');
-    if(sticker){
-        sticker.addEventListener('click', () => {
-             const honk = new Audio('https://www.myinstants.com/media/sounds/fnaf-nose-honk.mp3');
-             honk.play();
+    // Datos de la canción
+    const songData = {
+        title: "Why'd You Only Call Me...",
+        artist: "Arctic Monkeys",
+        meaning: "Es una representación de la desesperación narcisista...",
+        lyrics: "The mirror's image tells me it's home time..."
+    };
+
+    // Cargar textos
+    document.getElementById('song-title').innerText = songData.title;
+    document.getElementById('song-artist').innerText = songData.artist;
+    document.getElementById('song-meaning').innerText = songData.meaning;
+    document.getElementById('lyrics-container').innerText = songData.lyrics;
+
+    // Play/Pause
+    playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            icon.classList.remove('fa-play');
+            icon.classList.add('fa-pause');
+            document.getElementById('album-art').style.animation = "spinBorder 4s linear infinite";
+        } else {
+            audio.pause();
+            icon.classList.remove('fa-pause');
+            icon.classList.add('fa-play');
+            document.getElementById('album-art').style.animation = "none";
+        }
+    });
+
+    // Actualizar barra de progreso
+    audio.addEventListener('timeupdate', () => {
+        if (audio.duration) {
+            const percent = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = percent + '%';
+        }
+    });
+
+    // 4. ACORDEONES
+    window.toggleSection = function(id) {
+        const el = document.getElementById(id);
+        el.classList.toggle('show');
+    };
+
+    // 5. CARGAR BOTS (Grid System)
+    const masculinos = document.getElementById('bots-masculinos');
+    const femeninos = document.getElementById('bots-femeninos');
+    const currentBotName = "Archibald";
+
+    if (typeof BOTS_LIST !== 'undefined' && Array.isArray(BOTS_LIST)) {
+        BOTS_LIST.forEach(bot => {
+            if (!bot.nombre.includes(currentBotName)) {
+                const html = `
+                    <a href="${bot.url}" class="char-icon" target="_blank">
+                        <img src="${bot.imagen}" alt="${bot.nombre}" loading="lazy">
+                        <span class="char-name">${bot.nombre}</span>
+                    </a>`;
+                
+                if (bot.genero === 'masculino') masculinos.innerHTML += html;
+                else femeninos.innerHTML += html;
+            }
         });
     }
+
+    // 6. BOTON COPIAR
+    const copyBtn = document.getElementById('copy-link-btn');
+    copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href);
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<span class="btn-text">¡COPIADO!</span> <i class="fas fa-check"></i>';
+        copyBtn.style.borderColor = "#fff";
+        setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+            copyBtn.style.borderColor = "var(--c-neon-green)";
+        }, 2000);
+    });
 });
