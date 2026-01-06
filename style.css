@@ -372,4 +372,35 @@ body {
         min-height: 100vh;
         overflow-y: auto; /* IMPORTANTE: Permite scroll nativo */
         overflow-x: hidden;
-     
+        display: block;
+    }
+
+    .bg-graphics { position: fixed; height: 100vh; }
+
+    .card-glass {
+        width: 100%; 
+        height: auto;
+        min-height: 100vh; /* Llena la pantalla */
+        border-radius: 0;
+        border: none;
+        overflow: visible; /* Deja que el contenido empuje */
+    }
+
+    .deco-corner { display: none; }
+    
+    .profile-header { padding-top: 60px; }
+    
+    .avatar-container { width: 160px; height: 160px; } /* Avatar grande también en móvil */
+    
+    .glitch-text { font-size: 2rem; }
+    
+    .overlay-glass { width: 95%; padding: 20px; }
+    
+    .content-scroll { overflow: visible; flex: none; }
+    
+    .music-player-container { margin: 10px 15px; }
+    .foldable-group { margin: 0 15px 15px; }
+
+    /* Ajustes para que los dedos no tapen cosas */
+    .nav-btn { padding: 10px 20px; font-size: 0.9rem; }
+}
