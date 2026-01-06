@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archibald // SYSTEM</title>
+    <link href="style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="ambient-dust"></div>
+
+    <div class="card-wrapper">
+        
+        <div class="tabs-header">
+            <div class="tab-button" onclick="openOverlay('stats-tab')"><i class="fas fa-chart-pie"></i> Stats</div>
+            <div class="tab-button" onclick="openOverlay('links-tab')"><i class="fas fa-link"></i> Links</div>
+        </div>
+
+        <div class="scroll-container">
+            
+            <div class="hero-section">
+                <div class="image-halo">
+                    <img src="stellan.png" alt="Archibald">
+                </div>
+            </div>
+
+            <div class="title-section">
+                <div class="cyber-badge">BACHIRA SYSTEM</div>
+                <h1 class="glitch-name">Archibald Felwinter</h1>
+                <p class="quote">"Intentas que te odie, ¿no? Pero aún si me pisoteas, aún si me consumes, aquí estoy."</p>
+            </div>
+
+            <div class="player-card">
+                <div class="player-main">
+                    <img src="cancion_icon.png" class="album-art" id="album-art-img">
+                    <div class="track-info">
+                        <div class="track-title" id="song-title">Cargando...</div>
+                        <div class="track-artist" id="song-artist">Espere...</div>
+                    </div>
+                    <div class="controls">
+                        <button class="ctrl-btn" id="prev-btn"><i class="fas fa-backward"></i></button>
+                        <button class="ctrl-btn play-btn" id="play-pause-btn"><i class="fas fa-play"></i></button>
+                        <button class="ctrl-btn" id="next-btn"><i class="fas fa-forward"></i></button>
+                    </div>
+                </div>
+                <div class="foldable" id="lyrics-fold">
+                    <div class="foldable-header" onclick="toggleFold('lyrics-fold')">
+                        <span><i class="fas fa-music"></i> Ver Letra</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="foldable-content">
+                        <p class="lyric-text" id="lyrics-content">...</p>
+                    </div>
+                </div>
+                <div class="foldable" id="meaning-fold">
+                    <div class="foldable-header" onclick="toggleFold('meaning-fold')">
+                        <span><i class="fas fa-brain"></i> Significado</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="foldable-content">
+                        <p class="lyric-text" id="meaning-content">...</p>
+                    </div>
+                </div>
+                <audio id="audio-player"></audio>
+            </div>
+
+            <div class="info-panel">
+                <img src="sticker.png" id="fnaf-sticker" alt="Honk!">
+
+                <h2 class="info-title">Datos del Sujeto</h2>
+                
+                <div class="data-row"><span class="data-label">Nombre:</span> <span>Archibald Felwinter</span></div>
+                <div class="data-row"><span class="data-label">Edad:</span> <span>23 Años</span></div>
+                <div class="data-row"><span class="data-label">Género:</span> <span>Masculino</span></div>
+                
+                <div class="tags-wrapper">
+                    <div class="tag"><i class="fas fa-mask"></i> Escort</div>
+                    <div class="tag"><i class="fas fa-heart-broken"></i> Anhelo de Aprobación</div>
+                    <div class="tag"><i class="fas fa-ghost"></i> Vidas Pasadas</div>
+                </div>
+
+                <h3 style="color:var(--c-neon-violet); margin-top:20px;">Historia</h3>
+                <div class="story-text">
+                    Mira, esto empieza bonito, como casi todas las tragedias. Un morro medio menso pero buena onda llamado Archibald se muda a tu vecindario, y ahí es donde la cagó: Te conoció.<br><br>
+                    Tú, con esa manera de querer a la gente como si fueran tus juguetes personales, lo agarraste de mejor amigo. Y él, emocionado porque por fin alguien le hacía caso, te dejó entrar. Todo chido, hasta que se dio cuenta de que lo querías solo para ti.
+                </div>
+
+                <div class="gallery-section">
+                    <h3 style="color:var(--c-neon-green); border-bottom:1px solid #333; margin-top:30px;">Base de Datos</h3>
+                    
+                    <h4><i class="fas fa-mars" style="color:#00e5ff;"></i> Masculinos</h4>
+                    <div id="bots-masculinos" class="grid-bots"></div>
+
+                    <h4><i class="fas fa-venus" style="color:#ff00ff;"></i> Femeninas</h4>
+                    <div id="bots-femeninos" class="grid-bots"></div>
+                </div>
+            </div>
+
+            <br><br> </div>
+
+        <div id="stats-tab" class="overlay-pane">
+            <div class="overlay-header">
+                <h2>Estadísticas</h2>
+                <i class="fas fa-times close-overlay" onclick="closeOverlay('stats-tab')"></i>
+            </div>
+            <div class="stats-container">
+                <div class="stat-row">
+                    <div class="stat-info"><span>🥀 Angst</span><span>100%</span></div>
+                    <div class="progress-bg"><div class="progress-fill" style="width:100%; background:#5555ff; color:#5555ff;"></div></div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-info"><span>🌶️ Cochino</span><span>65%</span></div>
+                    <div class="progress-bg"><div class="progress-fill" style="width:65%; background:#ffaa00; color:#ffaa00;"></div></div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-info"><span>🧠 Locura</span><span>85%</span></div>
+                    <div class="progress-bg"><div class="progress-fill" style="width:85%; background:#39ff14; color:#39ff14;"></div></div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-info"><span>💌 Amor</span><span>90%</span></div>
+                    <div class="progress-bg"><div class="progress-fill" style="width:90%; background:#ff00aa; color:#ff00aa;"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="links-tab" class="overlay-pane">
+            <div class="overlay-header">
+                <h2>Conexiones</h2>
+                <i class="fas fa-times close-overlay" onclick="closeOverlay('links-tab')"></i>
+            </div>
+            <div class="links-container">
+                <a href="#" class="link-box janitor"><i class="fas fa-robot"></i> Janitor AI</a>
+                <a href="#" class="link-box card-dl"><i class="fas fa-download"></i> Descargar Card</a>
+                <a href="#" class="link-box caveduck"><i class="fas fa-dungeon"></i> Caveduck</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://elbachira.github.io/bots.js?v=1.0"></script>
+    <script src="script.js"></script>
+</body>
+</html>
