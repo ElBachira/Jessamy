@@ -3,140 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archibald // SYSTEM</title>
+    <title>Archibald // SYSTEM OVERRIDE</title>
     <link href="style.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <div class="ambient-dust"></div>
+    <div id="loader">
+        <div class="loader-content">
+            <div class="glitch-text" data-text="INITIALIZING...">INITIALIZING...</div>
+            <div class="loader-bar"><div class="bar-fill"></div></div>
+            <p style="font-family: var(--font-mono); color: var(--c-neon-green);">Cargando recuerdos de Archibald...</p>
+        </div>
+    </div>
+
+    <div class="background-fx">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="fog-layer"></div>
+        <div class="digital-rain"></div>
+    </div>
+
+    <div class="floating-decor">
+        <span class="float-text t1">SYSTEM OK</span>
+        <span class="float-text t2">¿Me amas?</span>
+        <span class="float-text t3">ERROR 404: LOVE NOT FOUND</span>
+        <span class="float-text t4">FOREST_PROTOCOL</span>
+        <i class="fas fa-biohazard bio-icon"></i>
+        <i class="fas fa-heart-broken heart-icon"></i>
+    </div>
 
     <div class="card-wrapper">
+        <div class="cyber-frame">
+            <span class="corner c-tl"></span>
+            <span class="corner c-tr"></span>
+            <span class="corner c-bl"></span>
+            <span class="corner c-br"></span>
+        </div>
         
         <div class="tabs-header">
-            <div class="tab-button" onclick="openOverlay('stats-tab')"><i class="fas fa-chart-pie"></i> Stats</div>
-            <div class="tab-button" onclick="openOverlay('links-tab')"><i class="fas fa-link"></i> Links</div>
+            <div class="tab-button" onclick="openOverlay('stats-tab')">
+                <i class="fas fa-chart-pie"></i> <span class="tab-txt">STATS</span>
+            </div>
+            <div class="logo-center"><i class="fas fa-dragon"></i></div>
+            <div class="tab-button" onclick="openOverlay('links-tab')">
+                <i class="fas fa-link"></i> <span class="tab-txt">LINKS</span>
+            </div>
         </div>
 
         <div class="scroll-container">
             
             <div class="hero-section">
                 <div class="image-halo">
-                    <img src="stellan.png" alt="Archibald">
+                    <img src="stellan.png" alt="Archibald" class="hero-img">
+                    <div class="halo-ring ring-1"></div>
+                    <div class="halo-ring ring-2"></div>
                 </div>
             </div>
 
             <div class="title-section">
-                <div class="cyber-badge">BACHIRA SYSTEM</div>
-                <h1 class="glitch-name">Archibald Felwinter</h1>
-                <p class="quote">"Intentas que te odie, ¿no? Pero aún si me pisoteas, aún si me consumes, aquí estoy."</p>
+                <div class="status-badge"><span class="blink-dot"></span> ONLINE // BACHIRA SYSTEM</div>
+                <h1 class="glitch-name" data-text="Archibald Felwinter">Archibald Felwinter</h1>
+                <div class="decorative-line"></div>
+                <p class="quote">"Intentas que te odie, ¿no? Pero aún si me pisoteas, aún si me consumes, <span class="highlight">aquí estoy</span>."</p>
             </div>
 
-            <div class="player-card">
+            <div class="player-card glass-panel">
+                <div class="visualizer-bars">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
                 <div class="player-main">
-                    <img src="cancion_icon.png" class="album-art" id="album-art-img">
+                    <div class="art-wrapper">
+                        <img src="cancion_icon.png" class="album-art" id="album-art-img">
+                        <div class="disc-shine"></div>
+                    </div>
                     <div class="track-info">
                         <div class="track-title" id="song-title">Cargando...</div>
                         <div class="track-artist" id="song-artist">Espere...</div>
-                    </div>
-                    <div class="controls">
-                        <button class="ctrl-btn" id="prev-btn"><i class="fas fa-backward"></i></button>
-                        <button class="ctrl-btn play-btn" id="play-pause-btn"><i class="fas fa-play"></i></button>
-                        <button class="ctrl-btn" id="next-btn"><i class="fas fa-forward"></i></button>
+                        <div class="progress-bar-fake"><div class="prog-fill"></div></div>
                     </div>
                 </div>
-                <div class="foldable" id="lyrics-fold">
-                    <div class="foldable-header" onclick="toggleFold('lyrics-fold')">
-                        <span><i class="fas fa-music"></i> Ver Letra</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="foldable-content">
-                        <p class="lyric-text" id="lyrics-content">...</p>
-                    </div>
+                <div class="controls">
+                    <button class="ctrl-btn" id="prev-btn"><i class="fas fa-step-backward"></i></button>
+                    <button class="ctrl-btn play-btn-main" id="play-pause-btn"><i class="fas fa-play"></i></button>
+                    <button class="ctrl-btn" id="next-btn"><i class="fas fa-step-forward"></i></button>
                 </div>
-                <div class="foldable" id="meaning-fold">
-                    <div class="foldable-header" onclick="toggleFold('meaning-fold')">
-                        <span><i class="fas fa-brain"></i> Significado</span>
-                        <i class="fas fa-chevron-down"></i>
+                
+                <div class="foldable-group">
+                    <div class="foldable" id="lyrics-fold">
+                        <div class="foldable-header" onclick="toggleFold('lyrics-fold')">
+                            <span><i class="fas fa-music"></i> LYRICS_DATA</span>
+                            <i class="fas fa-caret-down"></i>
+                        </div>
+                        <div class="foldable-content">
+                            <p class="lyric-text" id="lyrics-content">...</p>
+                        </div>
                     </div>
-                    <div class="foldable-content">
-                        <p class="lyric-text" id="meaning-content">...</p>
+                    <div class="foldable" id="meaning-fold">
+                        <div class="foldable-header" onclick="toggleFold('meaning-fold')">
+                            <span><i class="fas fa-brain"></i> PSYCHO_ANALYSIS</span>
+                            <i class="fas fa-caret-down"></i>
+                        </div>
+                        <div class="foldable-content">
+                            <p class="lyric-text" id="meaning-content">...</p>
+                        </div>
                     </div>
                 </div>
                 <audio id="audio-player"></audio>
             </div>
 
-            <div class="info-panel">
-                <img src="sticker.png" id="fnaf-sticker" alt="Honk!">
-
-                <h2 class="info-title">Datos del Sujeto</h2>
-                
-                <div class="data-row"><span class="data-label">Nombre:</span> <span>Archibald Felwinter</span></div>
-                <div class="data-row"><span class="data-label">Edad:</span> <span>23 Años</span></div>
-                <div class="data-row"><span class="data-label">Género:</span> <span>Masculino</span></div>
-                
-                <div class="tags-wrapper">
-                    <div class="tag"><i class="fas fa-mask"></i> Escort</div>
-                    <div class="tag"><i class="fas fa-heart-broken"></i> Anhelo de Aprobación</div>
-                    <div class="tag"><i class="fas fa-ghost"></i> Vidas Pasadas</div>
+            <div class="info-panel glass-panel">
+                <div class="sticker-area">
+                    <img src="sticker.png" id="fnaf-sticker" alt="Honk!" title="Don't touch me!">
+                    <div class="speech-bubble">¡Honk!</div>
                 </div>
 
-                <h3 style="color:var(--c-neon-violet); margin-top:20px;">Historia</h3>
-                <div class="story-text">
-                    Mira, esto empieza bonito, como casi todas las tragedias. Un morro medio menso pero buena onda llamado Archibald se muda a tu vecindario, y ahí es donde la cagó: Te conoció.<br><br>
-                    Tú, con esa manera de querer a la gente como si fueran tus juguetes personales, lo agarraste de mejor amigo. Y él, emocionado porque por fin alguien le hacía caso, te dejó entrar. Todo chido, hasta que se dio cuenta de que lo querías solo para ti.
+                <h2 class="info-title">
+                    <i class="fas fa-fingerprint"></i> DATOS DEL SUJETO
+                </h2>
+                
+                <div class="data-grid">
+                    <div class="data-box">
+                        <span class="lbl">NOMBRE</span>
+                        <span class="val">Archibald</span>
+                    </div>
+                    <div class="data-box">
+                        <span class="lbl">EDAD</span>
+                        <span class="val">23 Años</span>
+                    </div>
+                    <div class="data-box">
+                        <span class="lbl">GÉNERO</span>
+                        <span class="val">Masculino</span>
+                    </div>
+                </div>
+                
+                <div class="tags-wrapper">
+                    <div class="tag t-purple"><i class="fas fa-mask"></i> Escort</div>
+                    <div class="tag t-green"><i class="fas fa-heart-broken"></i> Anhelo de Aprobación</div>
+                    <div class="tag t-blue"><i class="fas fa-ghost"></i> Vidas Pasadas</div>
+                </div>
+
+                <div class="story-container">
+                    <h3 class="neon-subtitle">HISTORIA // CORRUPTED FILE</h3>
+                    <div class="story-text">
+                        <span class="first-letter">M</span>ira, esto empieza bonito, como casi todas las tragedias. Un morro medio menso pero buena onda llamado Archibald se muda a tu vecindario, y ahí es donde la cagó: <span class="highlight-red">Te conoció.</span><br><br>
+                        Tú, con esa manera de querer a la gente como si fueran tus juguetes personales, lo agarraste de mejor amigo. Y él, emocionado porque por fin alguien le hacía caso, te dejó entrar. Todo chido, hasta que se dio cuenta de que lo querías solo para ti.
+                    </div>
                 </div>
 
                 <div class="gallery-section">
-                    <h3 style="color:var(--c-neon-green); border-bottom:1px solid #333; margin-top:30px;">Base de Datos</h3>
+                    <div class="gallery-header">BASE DE DATOS</div>
                     
-                    <h4><i class="fas fa-mars" style="color:#00e5ff;"></i> Masculinos</h4>
+                    <h4 class="sub-g-title"><i class="fas fa-mars"></i> MASCULINOS</h4>
                     <div id="bots-masculinos" class="grid-bots"></div>
 
-                    <h4><i class="fas fa-venus" style="color:#ff00ff;"></i> Femeninas</h4>
+                    <h4 class="sub-g-title"><i class="fas fa-venus"></i> FEMENINAS</h4>
                     <div id="bots-femeninos" class="grid-bots"></div>
                 </div>
+                
+                <div class="footer-decor">
+                    <p>— THE END IS NEVER THE END —</p>
+                </div>
             </div>
-
-            <br><br> </div>
+            
+            <br><br> 
+        </div>
 
         <div id="stats-tab" class="overlay-pane">
+            <div class="overlay-bg-anim"></div>
             <div class="overlay-header">
-                <h2>Estadísticas</h2>
+                <h2><i class="fas fa-chart-bar"></i> ESTADÍSTICAS</h2>
                 <i class="fas fa-times close-overlay" onclick="closeOverlay('stats-tab')"></i>
             </div>
             <div class="stats-container">
                 <div class="stat-row">
-                    <div class="stat-info"><span>🥀 Angst</span><span>100%</span></div>
-                    <div class="progress-bg"><div class="progress-fill" style="width:100%; background:#5555ff; color:#5555ff;"></div></div>
+                    <div class="stat-icon">🥀</div>
+                    <div class="stat-data">
+                        <div class="stat-info"><span>Angst</span><span>100%</span></div>
+                        <div class="progress-bg"><div class="progress-fill p-angst" style="width:100%;"></div></div>
+                    </div>
                 </div>
                 <div class="stat-row">
-                    <div class="stat-info"><span>🌶️ Cochino</span><span>65%</span></div>
-                    <div class="progress-bg"><div class="progress-fill" style="width:65%; background:#ffaa00; color:#ffaa00;"></div></div>
+                    <div class="stat-icon">🌶️</div>
+                    <div class="stat-data">
+                        <div class="stat-info"><span>Cochino</span><span>65%</span></div>
+                        <div class="progress-bg"><div class="progress-fill p-cochino" style="width:65%;"></div></div>
+                    </div>
                 </div>
                 <div class="stat-row">
-                    <div class="stat-info"><span>🧠 Locura</span><span>85%</span></div>
-                    <div class="progress-bg"><div class="progress-fill" style="width:85%; background:#39ff14; color:#39ff14;"></div></div>
+                    <div class="stat-icon">🧠</div>
+                    <div class="stat-data">
+                        <div class="stat-info"><span>Locura</span><span>85%</span></div>
+                        <div class="progress-bg"><div class="progress-fill p-locura" style="width:85%;"></div></div>
+                    </div>
                 </div>
                 <div class="stat-row">
-                    <div class="stat-info"><span>💌 Amor</span><span>90%</span></div>
-                    <div class="progress-bg"><div class="progress-fill" style="width:90%; background:#ff00aa; color:#ff00aa;"></div></div>
+                    <div class="stat-icon">💌</div>
+                    <div class="stat-data">
+                        <div class="stat-info"><span>Amor</span><span>90%</span></div>
+                        <div class="progress-bg"><div class="progress-fill p-amor" style="width:90%;"></div></div>
+                    </div>
                 </div>
+            </div>
+            <div class="motivational-box">
+                "No importa cuánto duela, las estadísticas dicen que sigues aquí."
             </div>
         </div>
 
         <div id="links-tab" class="overlay-pane">
+            <div class="overlay-bg-anim"></div>
             <div class="overlay-header">
-                <h2>Conexiones</h2>
+                <h2><i class="fas fa-network-wired"></i> CONEXIONES</h2>
                 <i class="fas fa-times close-overlay" onclick="closeOverlay('links-tab')"></i>
             </div>
             <div class="links-container">
-                <a href="#" class="link-box janitor"><i class="fas fa-robot"></i> Janitor AI</a>
-                <a href="#" class="link-box card-dl"><i class="fas fa-download"></i> Descargar Card</a>
-                <a href="#" class="link-box caveduck"><i class="fas fa-dungeon"></i> Caveduck</a>
+                <a href="#" class="link-box janitor">
+                    <div class="link-icon"><i class="fas fa-robot"></i></div>
+                    <div class="link-text">
+                        <span>Janitor AI</span>
+                        <small>Chat Directo</small>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-anim"></i>
+                </a>
+                <a href="#" class="link-box card-dl">
+                    <div class="link-icon"><i class="fas fa-download"></i></div>
+                    <div class="link-text">
+                        <span>Descargar Card</span>
+                        <small>Formato PNG</small>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-anim"></i>
+                </a>
+                <a href="#" class="link-box caveduck">
+                    <div class="link-icon"><i class="fas fa-dungeon"></i></div>
+                    <div class="link-text">
+                        <span>Caveduck</span>
+                        <small>Mirror Alternativo</small>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-anim"></i>
+                </a>
             </div>
         </div>
 
