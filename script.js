@@ -1,113 +1,148 @@
+// CONFIGURACIÓN DE LA MÚSICA
+const songs = [
+    {
+        title: "Why'd You Only Call Me When You're High",
+        artist: "Arctic Monkeys",
+        src: "song.mp3", // ASEGURATE DE TENER ESTE ARCHIVO
+        meaning: "Esta canción refleja la toxicidad cíclica entre tú y Archie. Él solo te busca cuando está vulnerable (drogado/ebrio) porque sobrio su orgullo no se lo permite, y tú disfrutas tener ese control sobre él a las 3 AM.",
+        lyrics: [
+            "The mirror's image tells me it's home time",
+            "But I'm not finished 'cause you're not by my side",
+            "...",
+            "Why'd you only call me when you're high?"
+        ]
+    }
+];
+
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. PRELOADER ---
+    // --- PRELOADER ---
     setTimeout(() => {
-        document.getElementById('preloader').classList.add('loaded');
-    }, 1500);
+        document.getElementById('preloader').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('preloader').style.display = 'none';
+        }, 500);
+    }, 2000);
 
-    // --- 2. TABS NAVIGATION ---
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const views = document.querySelectorAll('.view-section');
+    // --- REPRODUCTOR DE MÚSICA ---
+    const audio = document.getElementById('audio-player');
+    const playBtn = document.getElementById('btn-play');
+    const titleEl = document.getElementById('song-title');
+    const artistEl = document.getElementById('song-artist');
+    const vinyl = document.querySelector('.vinyl-icon');
+    const progressBar = document.getElementById('progress-fill');
+    
+    let isPlaying = false;
+    let currentSong = 0;
 
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Remover activos
-            tabBtns.forEach(b => b.classList.remove('active'));
-            views.forEach(v => v.classList.add('hidden-view'));
-            
-            // Activar actual
-            btn.classList.add('active');
-            const targetId = btn.getAttribute('data-target');
-            const targetView = document.querySelector(targetId);
-            
-            // Pequeño delay para la animación
-            targetView.classList.remove('hidden-view');
-            
-            // Si es Stats, animar barras
-            if (targetId === '#stats-view') animateStats();
-        });
-    });
+    // Cargar canción inicial
+    loadSong(currentSong);
 
-    function animateStats() {
-        const bars = document.querySelectorAll('.progress-fill');
-        bars.forEach(bar => {
-            const finalWidth = bar.style.width; // Guarda el valor del HTML
-            bar.style.width = '0%'; // Resetea
-            setTimeout(() => {
-                bar.style.width = finalWidth; // Anima
-            }, 100);
-        });
+    function loadSong(index) {
+        const song = songs[index];
+        titleEl.innerText = song.title;
+        artistEl.innerText = song.artist;
+        audio.src = song.src;
+        document.getElementById('song-meaning').innerText = song.meaning;
+        
+        // Cargar letras
+        const lyricBox = document.getElementById('lyrics-text');
+        lyricBox.innerHTML = song.lyrics.map(line => `<p>${line}</p>`).join('');
     }
 
-    // --- 3. ACORDEONES (PLEGABLES) ---
-    const accordions = document.querySelectorAll('.accordion-header');
-    accordions.forEach(acc => {
-        acc.addEventListener('click', () => {
-            const item = acc.parentElement;
-            item.classList.toggle('open');
-            
-            // Cerrar otros (opcional, si quieres que solo uno esté abierto a la vez)
-            // document.querySelectorAll('.accordion-item').forEach(other => {
-            //     if(other !== item) other.classList.remove('open');
-            // });
-        });
-    });
-
-    // --- 4. REPRODUCTOR DE MÚSICA ---
-    const audio = document.getElementById('audio-source');
-    const playBtn = document.getElementById('play-btn');
-    const visualizer = document.querySelector('.player-visualizer');
-    let isPlaying = false;
-
     playBtn.addEventListener('click', () => {
-        if (!isPlaying) {
-            audio.play().catch(e => console.log("Interacción requerida primero"));
-            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            visualizer.classList.add('playing');
-            isPlaying = true;
+        if (isPlaying) {
+            pauseSong();
         } else {
-            audio.pause();
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            visualizer.classList.remove('playing');
-            isPlaying = false;
+            playSong();
         }
     });
 
-    // --- 5. CARGAR BOTS DESDE ARRAY (Tu lógica existente) ---
-    const masculinosContainer = document.getElementById('bots-masculinos');
-    const femeninosContainer = document.getElementById('bots-femeninos');
-    const nombreActual = "Archibald"; // Para evitar duplicados
-
-    if (typeof BOTS_LIST !== 'undefined' && Array.isArray(BOTS_LIST)) {
-        BOTS_LIST.forEach(bot => {
-            if (!bot.nombre.includes(nombreActual)) {
-                const botHtml = `
-                    <a href="${bot.url}" class="char-icon" title="${bot.nombre}">
-                        <img src="${bot.imagen}" alt="${bot.nombre}" loading="lazy">
-                    </a>
-                `;
-                if (bot.genero === 'masculino' && masculinosContainer) {
-                    masculinosContainer.innerHTML += botHtml;
-                } else if (bot.genero === 'femenino' && femeninosContainer) {
-                    femeninosContainer.innerHTML += botHtml;
-                }
-            }
-        });
+    function playSong() {
+        isPlaying = true;
+        audio.play().catch(e => console.log("Interacción requerida primero"));
+        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        document.querySelector('.music-player-glass').classList.add('playing');
     }
 
-    // --- 6. BOTÓN COPIAR ---
-    const shareBtn = document.getElementById('share-btn');
+    function pauseSong() {
+        isPlaying = false;
+        audio.pause();
+        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        document.querySelector('.music-player-glass').classList.remove('playing');
+    }
+
+    // Barra de progreso
+    audio.addEventListener('timeupdate', (e) => {
+        const { duration, currentTime } = e.srcElement;
+        const progressPercent = (currentTime / duration) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+    });
+
+    // --- PLEGABLE DE LETRAS ---
+    const toggleBtn = document.getElementById('toggle-lyrics');
+    const content = document.getElementById('lyrics-content');
+    
+    toggleBtn.addEventListener('click', () => {
+        content.classList.toggle('open');
+        const icon = toggleBtn.querySelector('i');
+        if(content.classList.contains('open')){
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+        } else {
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+        }
+    });
+
+    // --- STICKER FNAF ---
+    const sticker = document.getElementById('fnaf-sticker');
+    const honkSound = document.getElementById('fnaf-sound');
+    
+    sticker.addEventListener('click', () => {
+        // Reiniciar audio para poder spamear el click
+        honkSound.currentTime = 0;
+        honkSound.play().catch(e => console.log("Error audio sticker"));
+        
+        // Animación visual extra al click
+        sticker.style.transform = "scale(1.2) rotate(20deg)";
+        setTimeout(() => sticker.style.transform = "scale(1) rotate(0deg)", 100);
+    });
+
+    // --- MODALES (STATS & LINKS) ---
+    window.openModal = function(id) {
+        const modal = document.getElementById(id);
+        modal.classList.add('active');
+        
+        // Si es stats, animar las barras
+        if(id === 'stats-modal') {
+            const bars = modal.querySelectorAll('.bar-fill');
+            bars.forEach(bar => {
+                // Truco para reiniciar animación css width
+                const w = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => bar.style.width = w, 100);
+            });
+        }
+    }
+
+    window.closeModal = function(id) {
+        document.getElementById(id).classList.remove('active');
+    }
+
+    // Cerrar modal al hacer click fuera
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+            if(e.target === overlay) {
+                overlay.classList.remove('active');
+            }
+        });
+    });
+
+    // --- SHARE BUTTON ---
+    const shareBtn = document.getElementById('share-fab');
     shareBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(window.location.href);
-        const originalText = shareBtn.innerHTML;
-        shareBtn.innerHTML = '<i class="fas fa-check"></i> ¡ENLACE COPIADO!';
-        shareBtn.style.background = '#fff';
-        shareBtn.style.color = '#000';
-        
-        setTimeout(() => {
-            shareBtn.innerHTML = originalText;
-            shareBtn.style.background = '';
-            shareBtn.style.color = '';
-        }, 2000);
+        alert("¡Enlace copiado al portapapeles! 🌲");
     });
 });
