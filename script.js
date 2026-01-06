@@ -1,102 +1,65 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. CARGA DE BOTS (Automatizada) ---
+    // --- 0. PANTALLA DE CARGA ---
+    const loader = document.getElementById('loader');
+    setTimeout(() => {
+        loader.style.opacity = '0';
+        loader.style.visibility = 'hidden';
+    }, 2500); // 2.5 segundos de carga dramática
+
+    // --- 1. CARGA DE BOTS (Simulada para visualización) ---
+    // En tu versión real, esto carga desde bots.js
     const maleGrid = document.getElementById('bots-masculinos');
     const femaleGrid = document.getElementById('bots-femeninos');
-    const currentBotName = "Archibald";
-
-    if (typeof BOTS_LIST !== 'undefined' && Array.isArray(BOTS_LIST)) {
-        BOTS_LIST.forEach(bot => {
-            if (!bot.nombre.includes(currentBotName)) {
-                const botItem = document.createElement('a');
-                botItem.href = bot.url;
-                botItem.className = 'bot-item';
-                botItem.innerHTML = `<img src="${bot.imagen}" loading="lazy"><span class="bot-name">${bot.nombre}</span>`;
-                
-                if (bot.genero === 'masculino') maleGrid.appendChild(botItem);
-                else if (bot.genero === 'femenino') femaleGrid.appendChild(botItem);
-            }
+    
+    // Si BOTS_LIST no existe, pongo ejemplos dummy para que veas el diseño
+    if (typeof BOTS_LIST === 'undefined') {
+        const dummies = [
+            {url:'#', img:'https://i.pravatar.cc/150?u=1', name:'Alejandro'},
+            {url:'#', img:'https://i.pravatar.cc/150?u=2', name:'Drexler'},
+            {url:'#', img:'https://i.pravatar.cc/150?u=3', name:'Kardi'}
+        ];
+        dummies.forEach(d => {
+            maleGrid.innerHTML += `<a href="${d.url}" class="bot-item"><img src="${d.img}"><div class="bot-name">${d.name}</div></a>`;
         });
     }
 
-    // --- 2. REPRODUCTOR DE MÚSICA PRO ---
-    const songs = [
-        {
-            title: "Why'd You Only Call Me When You're High",
-            artist: "Arctic Monkeys",
-            src: "song.mp3", // ASEGURATE DE TENER ESTE ARCHIVO
-            cover: "cancion_icon.png",
-            lyrics: "The mirror's image tells me it's home time\nBut I'm not finished 'cause you're not by my side\n...\nWhy'd you only call me when you're high?",
-            meaning: "Esta canción refleja esa toxicidad nocturna donde Archie sabe que solo lo buscas cuando estás vulnerable o intoxicado, pero él sigue contestando."
-        }
-        // Puedes agregar más canciones aquí copiando el bloque { ... }
-    ];
-
-    let currentIdx = 0;
+    // --- 2. REPRODUCTOR ---
     const audio = document.getElementById('audio-player');
-    const titleEl = document.getElementById('song-title');
-    const artistEl = document.getElementById('song-artist');
-    const coverEl = document.getElementById('album-art-img');
     const playBtn = document.getElementById('play-pause-btn');
-    const lyricsEl = document.getElementById('lyrics-content');
-    const meaningEl = document.getElementById('meaning-content');
-
-    function loadSong(index) {
-        const s = songs[index];
-        titleEl.innerText = s.title;
-        artistEl.innerText = s.artist;
-        coverEl.src = s.cover;
-        audio.src = s.src;
-        lyricsEl.innerText = s.lyrics;
-        meaningEl.innerText = s.meaning;
-    }
-
-    loadSong(currentIdx); // Cargar inicial
+    const coverEl = document.getElementById('album-art-img');
+    let isPlaying = false;
 
     playBtn.addEventListener('click', () => {
-        if (audio.paused) {
-            audio.play();
+        if (!isPlaying) {
+            // audio.play(); // Descomentar si hay archivo real
             playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            coverEl.style.animation = "spinGlow 4s linear infinite"; // Girar disco
+            playBtn.style.boxShadow = "0 0 30px var(--c-hot-pink)";
+            coverEl.style.transform = "scale(1.05)";
+            isPlaying = true;
         } else {
-            audio.pause();
+            // audio.pause();
             playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            coverEl.style.animation = "none";
+            playBtn.style.boxShadow = "0 0 20px var(--c-neon-green)";
+            coverEl.style.transform = "scale(1)";
+            isPlaying = false;
         }
     });
 
-    document.getElementById('next-btn').addEventListener('click', () => {
-        currentIdx = (currentIdx + 1) % songs.length;
-        loadSong(currentIdx);
-        audio.play();
-        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-    });
-    
-    document.getElementById('prev-btn').addEventListener('click', () => {
-        currentIdx = (currentIdx - 1 + songs.length) % songs.length;
-        loadSong(currentIdx);
-        audio.play();
-        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-    });
-
-    // --- 3. FUNCIONALIDAD DEL STICKER (HONK) ---
-    const sticker = document.getElementById('fnaf-sticker');
-    // Sonido de nariz de payaso (FNAF style)
-    const honkSound = new Audio('https://www.myinstants.com/media/sounds/honk-sound.mp3'); 
-    
-    sticker.addEventListener('click', () => {
-        honkSound.currentTime = 0;
-        honkSound.volume = 0.6;
-        honkSound.play();
+    // --- 3. ACORDEONES (Lyrics / Significado) ---
+    window.toggleFold = function(id) {
+        const el = document.getElementById(id);
+        const allFolds = document.querySelectorAll('.foldable');
         
-        // Animación de apachurrar
-        sticker.style.transform = "scale(0.8) rotate(10deg)";
-        setTimeout(() => {
-            sticker.style.transform = "scale(1) rotate(10deg)";
-        }, 100);
-    });
+        // Cierra los otros para mantenerlo limpio
+        allFolds.forEach(fold => {
+            if (fold.id !== id) fold.classList.remove('open');
+        });
+        
+        el.classList.toggle('open');
+    };
 
-    // --- 4. OVERLAYS Y ACORDEONES ---
+    // --- 4. OVERLAYS ---
     window.openOverlay = function(id) {
         document.getElementById(id).classList.add('active');
     };
@@ -105,8 +68,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById(id).classList.remove('active');
     };
 
-    window.toggleFold = function(id) {
-        const el = document.getElementById(id);
-        el.classList.toggle('open');
-    };
+    // --- 5. STICKER INTERACTION ---
+    const sticker = document.getElementById('fnaf-sticker');
+    sticker.addEventListener('click', () => {
+        const honk = new Audio('https://www.myinstants.com/media/sounds/honk-sound.mp3');
+        honk.volume = 0.5;
+        honk.play();
+        
+        // Efecto visual extra
+        sticker.style.filter = "hue-rotate(90deg) drop-shadow(0 0 15px red)";
+        setTimeout(() => sticker.style.filter = "", 200);
+    });
 });
