@@ -2,236 +2,217 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Archibald // ETHER SYSTEM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Archibald // SYSTEM OVERRIDE</title>
     <link href="style.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Orbitron:wght@500;900&family=Rajdhani:wght@300;500;700&family=Monsieur+La+Doulaise&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;600;700&family=Shadows+Into+Light&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <div id="loader-screen">
+    <div id="loader">
         <div class="loader-content">
             <div class="spinner-bio"></div>
-            <h2 class="loading-text">SINCRONIZANDO ALMA...</h2>
-            <p class="loading-sub">"El bosque digital respira tu nombre"</p>
+            <h2 class="loader-text">SINCRONIZANDO NEURO-ENLACE...</h2>
+            <p class="loader-sub">Cargando Trauma & Obsesión</p>
         </div>
     </div>
 
-    <div class="background-universe">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+    <div class="bg-graphics">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
         <div class="grid-overlay"></div>
-        <div class="noise-overlay"></div>
+        <div class="particles" id="particles"></div>
     </div>
 
-    <div class="floating-deco top-left">RECUERDOS // 001</div>
-    <div class="floating-deco bottom-right">NO ME OLVIDES</div>
-    <div class="floating-deco mid-left vertical-text">CONEXIÓN ESTABLECIDA</div>
-    <img src="https://cdn-icons-png.flaticon.com/512/86/86581.png" class="floating-icon icon-1" alt="star">
-    <img src="https://cdn-icons-png.flaticon.com/512/2919/2919600.png" class="floating-icon icon-2" alt="moon">
-
-    <div class="card-wrapper" id="main-card">
+    <main class="card-glass">
         
-        <div class="holo-border"></div>
+        <div class="deco-corner top-left"></div>
+        <div class="deco-corner top-right"></div>
+        <div class="deco-corner bottom-left"></div>
+        <div class="deco-corner bottom-right"></div>
 
-        <div class="tabs-header">
-            <div class="tab-button" onclick="openOverlay('stats-tab')">
-                <i class="fas fa-dna"></i> <span>Análisis</span>
-            </div>
-            <div class="logo-center">AF</div>
-            <div class="tab-button" onclick="openOverlay('links-tab')">
-                <i class="fas fa-network-wired"></i> <span>Nexos</span>
-            </div>
-        </div>
+        <nav class="top-nav">
+            <button class="nav-btn" onclick="openOverlay('stats-tab')">
+                <i class="fas fa-chart-pie"></i> <span>STATS</span>
+            </button>
+            <div class="nav-deco-line"></div>
+            <button class="nav-btn" onclick="openOverlay('links-tab')">
+                <i class="fas fa-link"></i> <span>LINKS</span>
+            </button>
+        </nav>
 
-        <div class="scroll-container">
+        <div class="content-scroll">
             
-            <div class="hero-section">
-                <div class="decorative-circle-back"></div>
-                <div class="image-halo">
-                    <img src="stellan.png" alt="Archibald" id="profile-img">
-                    <div class="status-indicator online"></div>
+            <header class="profile-header">
+                <div class="avatar-container">
+                    <div class="avatar-ring"></div>
+                    <div class="avatar-ring-2"></div>
+                    <img src="stellan.png" alt="Archie" class="avatar-img">
+                    <div class="status-badge">ONLINE</div>
                 </div>
-                <div class="name-container">
-                    <span class="script-decor">The Fallen</span>
-                    <h1 class="glitch-name" data-text="Archibald Felwinter">Archibald Felwinter</h1>
-                    <div class="cyber-badge">BACHIRA SYSTEM v9.0</div>
+                
+                <div class="title-block">
+                    <span class="cyber-tag">BACHIRA SYSTEM v2.0</span>
+                    <h1 class="glitch-text" data-text="Archibald Felwinter">Archibald Felwinter</h1>
+                    <div class="aesthetic-quote">
+                        "Intentas que te odie, ¿no? Pero aún si me pisoteas... <br>
+                        <span class="highlight">AQUÍ SIGO.</span>"
+                    </div>
                 </div>
-            </div>
+            </header>
 
-            <div class="quote-box">
-                <i class="fas fa-quote-left quote-icon"></i>
-                <p class="quote-text">"Intentas que te odie, ¿no? Pero aún si me pisoteas, aún si me consumes, <span class="highlight">aquí estoy</span>. Como hiedra en tus pulmones."</p>
-                <i class="fas fa-quote-right quote-icon icon-right"></i>
-            </div>
-
-            <div class="player-card glass-panel">
-                <div class="equalizer-top">
+            <section class="music-player-container">
+                <div class="equalizer">
                     <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
                 </div>
-                <div class="player-main">
-                    <div class="vinyl-wrapper">
-                        <img src="cancion_icon.png" class="album-art" id="album-art-img">
-                        <div class="vinyl-center"></div>
-                    </div>
-                    <div class="track-info">
-                        <div class="track-title" id="song-title">Cargando...</div>
-                        <div class="track-artist" id="song-artist">Espere...</div>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
-                    </div>
+                <div class="player-info">
+                    <h3 id="song-title">Cargando...</h3>
+                    <p id="song-artist">Espere...</p>
                 </div>
-                
-                <div class="controls-fancy">
-                    <button class="ctrl-btn-f" id="prev-btn"><i class="fas fa-step-backward"></i></button>
-                    <button class="ctrl-btn-f play-big" id="play-pause-btn"><i class="fas fa-play"></i></button>
-                    <button class="ctrl-btn-f" id="next-btn"><i class="fas fa-step-forward"></i></button>
-                </div>
-
-                <div class="lyrics-btn-wrapper">
-                    <button class="btn-reveal" onclick="toggleFold('lyrics-fold')">✨ Ver Letra Oculta ✨</button>
-                    <button class="btn-reveal color-2" onclick="toggleFold('meaning-fold')">👁️ Significado Oculto</button>
-                </div>
-
-                <div class="foldable" id="lyrics-fold">
-                    <p class="lyric-text" id="lyrics-content">...</p>
-                </div>
-                <div class="foldable" id="meaning-fold">
-                    <p class="lyric-text" id="meaning-content">...</p>
+                <div class="player-controls">
+                    <button id="prev-btn"><i class="fas fa-step-backward"></i></button>
+                    <button id="play-pause-btn" class="play-main"><i class="fas fa-play"></i></button>
+                    <button id="next-btn"><i class="fas fa-step-forward"></i></button>
                 </div>
                 <audio id="audio-player"></audio>
+            </section>
+
+            <div class="foldable-group">
+                <div class="foldable" id="lyrics-fold">
+                    <div class="foldable-head" onclick="toggleFold('lyrics-fold')">
+                        <i class="fas fa-music"></i> <span>Ver Letra de la Canción</span> <i class="fas fa-caret-down arrow"></i>
+                    </div>
+                    <div class="foldable-body"><p id="lyrics-content">...</p></div>
+                </div>
+                <div class="foldable" id="meaning-fold">
+                    <div class="foldable-head" onclick="toggleFold('meaning-fold')">
+                        <i class="fas fa-brain"></i> <span>Análisis Psicológico</span> <i class="fas fa-caret-down arrow"></i>
+                    </div>
+                    <div class="foldable-body"><p id="meaning-content">...</p></div>
+                </div>
             </div>
 
-            <div class="info-panel glass-panel">
-                <div class="panel-header">
-                    <h3><i class="fas fa-fingerprint"></i> Archivo Confidencial</h3>
-                    <div class="dots-deco"></div>
-                </div>
+            <section class="info-box">
+                <img src="sticker.png" id="honk-sticker" class="float-sticker" alt="HONK">
                 
-                <img src="sticker.png" id="fnaf-sticker" alt="HONK" title="¡Apachúrrale la nariz!">
+                <div class="section-title">
+                    <i class="fas fa-fingerprint"></i> DATOS DEL SUJETO
+                </div>
 
                 <div class="data-grid">
-                    <div class="data-box">
-                        <span class="label">EDAD</span>
-                        <span class="value">23 Ciclos</span>
+                    <div class="data-item">
+                        <span class="lbl">NOMBRE</span>
+                        <span class="val">Archibald Felwinter</span>
                     </div>
-                    <div class="data-box">
-                        <span class="label">ROL</span>
-                        <span class="value">Escort / Mártir</span>
+                    <div class="data-item">
+                        <span class="lbl">EDAD</span>
+                        <span class="val">23 Años</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="lbl">GÉNERO</span>
+                        <span class="val">Masculino</span>
                     </div>
                 </div>
-                
+
                 <div class="tags-cloud">
-                    <span class="tag-pill">🥀 Anhelo de Aprobación</span>
-                    <span class="tag-pill">👻 Vidas Pasadas</span>
-                    <span class="tag-pill">💔 Codependencia</span>
-                    <span class="tag-pill">⛓️ Lealtad Tóxica</span>
+                    <span class="neon-tag tag-violet"><i class="fas fa-mask"></i> Escort</span>
+                    <span class="neon-tag tag-green"><i class="fas fa-heart-broken"></i> Obsesivo</span>
+                    <span class="neon-tag tag-violet"><i class="fas fa-ghost"></i> Vidas Pasadas</span>
+                    <span class="neon-tag tag-green"><i class="fas fa-dog"></i> Lealtad</span>
                 </div>
 
                 <div class="story-container">
-                    <h3 class="story-title">FRAGMENTO DE MEMORIA</h3>
-                    <div class="story-text">
-                        Mira, esto empieza bonito, como un cuento de hadas que salió mal. Un chico llamado <span class="text-neon">Archie</span> llegó a tu vida como un perro perdido buscando dueño. <br><br>
-                        Tú lo acogiste, no por bondad, sino por aburrimiento. Y él, pobre diablo, confundió tu manipulación con amor. Ahora es tuyo, en cuerpo y alma, atrapado en una red de neón y mentiras que tú tejiste.
+                    <h3 class="story-head">HISTORIAL DE ARCHIVOS</h3>
+                    <div class="story-content">
+                        <p>Mira, esto empieza bonito, como casi todas las tragedias. Un morro medio menso pero buena onda llamado <strong>Archibald</strong> se muda a tu vecindario, y ahí es donde la cagó: <span class="highlight-text">Te conoció.</span></p>
+                        <p>Tú, con esa manera de querer a la gente como si fueran tus juguetes personales, lo agarraste de mejor amigo. Y él, emocionado porque por fin alguien le hacía caso, te dejó entrar.</p>
+                        <div class="quote-insert">"No me importa si duele, solo no me dejes solo."</div>
+                        <p>Todo chido, hasta que se dio cuenta de que lo querías solo para ti. Cualquier otro amigo que intentara hacer, tú te los echabas con indirectas pasivo-agresivas dignas de tía en Facebook.</p>
                     </div>
                 </div>
 
-                <div class="gallery-section">
-                    <div class="divider-art"><span>CONEXIONES DEL SISTEMA</span></div>
+                <div class="gallery-zone">
+                    <div class="gallery-header">
+                        <i class="fas fa-database"></i> BASE DE DATOS
+                    </div>
                     
-                    <h4 class="gallery-sub"><i class="fas fa-mars"></i> Entidades Masculinas</h4>
-                    <div id="bots-masculinos" class="grid-bots-art"></div>
+                    <h4 class="sub-g-title"><i class="fas fa-mars"></i> Masculinos</h4>
+                    <div id="bots-masculinos" class="bot-grid"></div>
 
-                    <h4 class="gallery-sub feminine"><i class="fas fa-venus"></i> Entidades Femeninas</h4>
-                    <div id="bots-femeninos" class="grid-bots-art"></div>
+                    <h4 class="sub-g-title"><i class="fas fa-venus"></i> Femeninas</h4>
+                    <div id="bots-femeninos" class="bot-grid"></div>
                 </div>
-                
-                <div class="footer-sign">
-                    <p>Creado por Bachira // System Error</p>
+
+                <div class="card-footer">
+                    <p>SYSTEM.ROOT.USER // ACCESS GRANTED</p>
+                    <div class="runes">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ</div>
                 </div>
-            </div>
-            <br><br> 
+            </section>
         </div>
+    </main>
 
-        <div id="stats-tab" class="overlay-pane">
-            <div class="overlay-bg-anim"></div>
-            <div class="overlay-header">
-                <h2>Psico-Análisis</h2>
-                <i class="fas fa-times-circle close-overlay" onclick="closeOverlay('stats-tab')"></i>
-            </div>
-            <div class="stats-container-art">
-                <div class="stat-art-row">
-                    <div class="stat-icon"><i class="fas fa-heart-broken"></i></div>
-                    <div class="stat-details">
-                        <div class="stat-top"><span>Angst Puro</span> <span>100%</span></div>
-                        <div class="bar-bg"><div class="bar-fill s-angst"></div></div>
-                    </div>
+    <div id="stats-tab" class="overlay">
+        <div class="overlay-glass">
+            <button class="close-btn" onclick="closeOverlay('stats-tab')"><i class="fas fa-times"></i></button>
+            <h2><i class="fas fa-chart-bar"></i> ESTADÍSTICAS</h2>
+            
+            <div class="stat-bars">
+                <div class="stat-unit">
+                    <div class="stat-top"><span>🥀 Angst</span> <span>100%</span></div>
+                    <div class="bar-bg"><div class="bar-fill violet" style="width:100%"></div></div>
                 </div>
-                <div class="stat-art-row">
-                    <div class="stat-icon"><i class="fas fa-fire"></i></div>
-                    <div class="stat-details">
-                        <div class="stat-top"><span>Corrupción</span> <span>65%</span></div>
-                        <div class="bar-bg"><div class="bar-fill s-lewd"></div></div>
-                    </div>
+                <div class="stat-unit">
+                    <div class="stat-top"><span>🌶️ Cochino</span> <span>65%</span></div>
+                    <div class="bar-bg"><div class="bar-fill green" style="width:65%"></div></div>
                 </div>
-                <div class="stat-art-row">
-                    <div class="stat-icon"><i class="fas fa-brain"></i></div>
-                    <div class="stat-details">
-                        <div class="stat-top"><span>Inestabilidad</span> <span>85%</span></div>
-                        <div class="bar-bg"><div class="bar-fill s-mad"></div></div>
-                    </div>
+                <div class="stat-unit">
+                    <div class="stat-top"><span>🧠 Locura</span> <span>85%</span></div>
+                    <div class="bar-bg"><div class="bar-fill violet" style="width:85%"></div></div>
                 </div>
-                <div class="stat-art-row">
-                    <div class="stat-icon"><i class="fas fa-kiss-wink-heart"></i></div>
-                    <div class="stat-details">
-                        <div class="stat-top"><span>Devoción</span> <span>90%</span></div>
-                        <div class="bar-bg"><div class="bar-fill s-love"></div></div>
-                    </div>
+                <div class="stat-unit">
+                    <div class="stat-top"><span>💌 Amor</span> <span>90%</span></div>
+                    <div class="bar-bg"><div class="bar-fill green" style="width:90%"></div></div>
                 </div>
             </div>
-            <div class="chart-decoration">
-                <img src="https://cdn-icons-png.flaticon.com/512/2620/2620602.png" alt="radar" class="radar-scan">
+            <div class="motivational-box">
+                "Tus estadísticas no definen tu destino, pero sí explican por qué necesitas terapia."
             </div>
         </div>
-
-        <div id="links-tab" class="overlay-pane">
-             <div class="overlay-bg-anim"></div>
-            <div class="overlay-header">
-                <h2>Portales</h2>
-                <i class="fas fa-times-circle close-overlay" onclick="closeOverlay('links-tab')"></i>
-            </div>
-            <div class="links-hex-grid">
-                <a href="#" class="hex-link janitor">
-                    <i class="fas fa-robot"></i>
-                    <span>Janitor</span>
-                    <small>IA</small>
-                </a>
-                <a href="#" class="hex-link caveduck">
-                    <i class="fas fa-dungeon"></i>
-                    <span>Caveduck</span>
-                    <small>Chat</small>
-                </a>
-                <a href="#" class="hex-link download">
-                    <i class="fas fa-save"></i>
-                    <span>Tarjeta</span>
-                    <small>PNG</small>
-                </a>
-                <a href="#" class="hex-link doki">
-                    <i class="fas fa-comments"></i>
-                    <span>Dokichat</span>
-                    <small>App</small>
-                </a>
-            </div>
-        </div>
-
     </div>
 
-    <script src="https://elbachira.github.io/bots.js?v=1.0"></script>
-    <script src="script.js"></script>
+    <div id="links-tab" class="overlay">
+        <div class="overlay-glass">
+            <button class="close-btn" onclick="closeOverlay('links-tab')"><i class="fas fa-times"></i></button>
+            <h2><i class="fas fa-network-wired"></i> CONEXIONES</h2>
+            
+            <div class="links-list">
+                <a href="#" class="mega-link janitor">
+                    <i class="fas fa-robot"></i>
+                    <div>
+                        <strong>Janitor AI</strong>
+                        <small>Conexión Neural</small>
+                    </div>
+                </a>
+                <a href="#" class="mega-link caveduck">
+                    <i class="fas fa-dungeon"></i>
+                    <div>
+                        <strong>Caveduck</strong>
+                        <small>Servidor Profundo</small>
+                    </div>
+                </a>
+                <a href="#" class="mega-link download">
+                    <i class="fas fa-file-download"></i>
+                    <div>
+                        <strong>Descargar Card</strong>
+                        <small>Guardar Archivo .JSON</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://elbachira.github.io/bots.js"></script> <script src="script.js"></script>
 </body>
 </html>
