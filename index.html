@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Archibald // SYSTEM OVERRIDE</title>
+    <title>Archibald // SYSTEM OVERRIDE v3.0</title>
     <link href="style.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;600;700&family=Shadows+Into+Light&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -11,19 +11,24 @@
 </head>
 <body>
 
+    <audio id="sfx-hover" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+    <audio id="sfx-click" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+    <audio id="sfx-open" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
+
     <div id="loader">
         <div class="loader-content">
             <div class="spinner-bio"></div>
-            <h2 class="loader-text">SINCRONIZANDO NEURO-ENLACE...</h2>
-            <p class="loader-sub">Cargando Trauma & Obsesión</p>
+            <h2 class="loader-text">NEURO-ENLACE v3.0</h2>
+            <p class="loader-sub">Sincronizando Sistema Neon...</p>
         </div>
     </div>
 
     <div class="bg-graphics">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
-        <div class="grid-overlay"></div>
+        <div class="blob blob-3"></div> <div class="grid-overlay"></div>
         <div class="particles" id="particles"></div>
+        <div class="scanlines"></div>
     </div>
 
     <main class="card-glass">
@@ -34,11 +39,11 @@
         <div class="deco-corner bottom-right"></div>
 
         <nav class="top-nav">
-            <button class="nav-btn" onclick="openOverlay('stats-tab')">
+            <button class="nav-btn ui-trigger" onclick="openOverlay('stats-tab')">
                 <i class="fas fa-chart-pie"></i> <span>STATS</span>
             </button>
             <div class="nav-deco-line"></div>
-            <button class="nav-btn" onclick="openOverlay('links-tab')">
+            <button class="nav-btn ui-trigger" onclick="openOverlay('links-tab')">
                 <i class="fas fa-link"></i> <span>LINKS</span>
             </button>
         </nav>
@@ -49,12 +54,12 @@
                 <div class="avatar-container">
                     <div class="avatar-ring"></div>
                     <div class="avatar-ring-2"></div>
-                    <img src="stellan.png" alt="Archie" class="avatar-img">
+                    <img src="stellan.png" alt="Archie" class="avatar-img neon-cycle">
                     <div class="status-badge">ONLINE</div>
                 </div>
                 
                 <div class="title-block">
-                    <span class="cyber-tag">BACHIRA SYSTEM v2.0</span>
+                    <span class="cyber-tag">BACHIRA SYSTEM v3.0</span>
                     <h1 class="glitch-text" data-text="Archibald Felwinter">Archibald Felwinter</h1>
                     <div class="aesthetic-quote">
                         "Intentas que te odie, ¿no? Pero aún si me pisoteas... <br>
@@ -72,21 +77,21 @@
                     <p id="song-artist">Espere...</p>
                 </div>
                 <div class="player-controls">
-                    <button id="prev-btn"><i class="fas fa-step-backward"></i></button>
-                    <button id="play-pause-btn" class="play-main"><i class="fas fa-play"></i></button>
-                    <button id="next-btn"><i class="fas fa-step-forward"></i></button>
+                    <button id="prev-btn" class="ui-trigger"><i class="fas fa-step-backward"></i></button>
+                    <button id="play-pause-btn" class="play-main ui-trigger"><i class="fas fa-play"></i></button>
+                    <button id="next-btn" class="ui-trigger"><i class="fas fa-step-forward"></i></button>
                 </div>
                 <audio id="audio-player"></audio>
             </section>
 
             <div class="foldable-group">
-                <div class="foldable" id="lyrics-fold">
+                <div class="foldable ui-trigger-hover" id="lyrics-fold">
                     <div class="foldable-head" onclick="toggleFold('lyrics-fold')">
                         <i class="fas fa-music"></i> <span>Ver Letra de la Canción</span> <i class="fas fa-caret-down arrow"></i>
                     </div>
                     <div class="foldable-body"><p id="lyrics-content">...</p></div>
                 </div>
-                <div class="foldable" id="meaning-fold">
+                <div class="foldable ui-trigger-hover" id="meaning-fold">
                     <div class="foldable-head" onclick="toggleFold('meaning-fold')">
                         <i class="fas fa-brain"></i> <span>Análisis Psicológico</span> <i class="fas fa-caret-down arrow"></i>
                     </div>
@@ -155,51 +160,28 @@
 
     <div id="stats-tab" class="overlay">
         <div class="overlay-glass">
-            <button class="close-btn" onclick="closeOverlay('stats-tab')"><i class="fas fa-times"></i></button>
+            <button class="close-btn ui-trigger" onclick="closeOverlay('stats-tab')"><i class="fas fa-times"></i></button>
             <h2><i class="fas fa-chart-bar"></i> ESTADÍSTICAS</h2>
             
             <div class="stat-bars">
-                <div class="stat-unit">
-                    <div class="stat-top">
-                        <span><i class="fas fa-skull"></i> Angst</span> 
-                        <span class="val-num">100%</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill violet" data-width="100%" style="width:0%"></div>
-                    </div>
+                <div class="stat-unit" style="--d: 0.1s">
+                    <div class="stat-top"><span>🥀 Angst</span> <span>100%</span></div>
+                    <div class="bar-bg"><div class="bar-fill violet" style="width:100%"></div></div>
                 </div>
-
-                <div class="stat-unit">
-                    <div class="stat-top">
-                        <span><i class="fas fa-pepper-hot"></i> Deseo</span> 
-                        <span class="val-num">65%</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill green" data-width="65%" style="width:0%"></div>
-                    </div>
+                <div class="stat-unit" style="--d: 0.2s">
+                    <div class="stat-top"><span>🌶️ Cochino</span> <span>65%</span></div>
+                    <div class="bar-bg"><div class="bar-fill green" style="width:65%"></div></div>
                 </div>
-
-                <div class="stat-unit">
-                    <div class="stat-top">
-                        <span><i class="fas fa-brain"></i> Inestabilidad</span> 
-                        <span class="val-num">85%</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill violet" data-width="85%" style="width:0%"></div>
-                    </div>
+                <div class="stat-unit" style="--d: 0.3s">
+                    <div class="stat-top"><span>🧠 Locura</span> <span>85%</span></div>
+                    <div class="bar-bg"><div class="bar-fill violet" style="width:85%"></div></div>
                 </div>
-
-                <div class="stat-unit">
-                    <div class="stat-top">
-                        <span><i class="fas fa-heart"></i> Obsesión</span> 
-                        <span class="val-num">90%</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill green" data-width="90%" style="width:0%"></div>
-                    </div>
+                <div class="stat-unit" style="--d: 0.4s">
+                    <div class="stat-top"><span>💌 Amor</span> <span>90%</span></div>
+                    <div class="bar-bg"><div class="bar-fill green" style="width:90%"></div></div>
                 </div>
             </div>
-            <div class="motivational-box">
+            <div class="motivational-box pop-in">
                 "Tus estadísticas no definen tu destino, pero sí explican por qué necesitas terapia."
             </div>
         </div>
@@ -207,25 +189,25 @@
 
     <div id="links-tab" class="overlay">
         <div class="overlay-glass">
-            <button class="close-btn" onclick="closeOverlay('links-tab')"><i class="fas fa-times"></i></button>
+            <button class="close-btn ui-trigger" onclick="closeOverlay('links-tab')"><i class="fas fa-times"></i></button>
             <h2><i class="fas fa-network-wired"></i> CONEXIONES</h2>
             
             <div class="links-list">
-                <a href="#" class="mega-link janitor">
+                <a href="#" class="mega-link janitor ui-trigger" style="--d: 0.1s">
                     <i class="fas fa-robot"></i>
                     <div>
                         <strong>Janitor AI</strong>
                         <small>Conexión Neural</small>
                     </div>
                 </a>
-                <a href="#" class="mega-link caveduck">
+                <a href="#" class="mega-link caveduck ui-trigger" style="--d: 0.2s">
                     <i class="fas fa-dungeon"></i>
                     <div>
                         <strong>Caveduck</strong>
                         <small>Servidor Profundo</small>
                     </div>
                 </a>
-                <a href="#" class="mega-link download">
+                <a href="#" class="mega-link download ui-trigger" style="--d: 0.3s">
                     <i class="fas fa-file-download"></i>
                     <div>
                         <strong>Descargar Card</strong>
@@ -236,6 +218,7 @@
         </div>
     </div>
 
-    <script src="https://elbachira.github.io/bots.js"></script> <script src="script.js"></script>
+    <script src="https://elbachira.github.io/bots.js"></script> 
+    <script src="script.js"></script>
 </body>
 </html>
