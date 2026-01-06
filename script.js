@@ -1,121 +1,113 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. PRELOADER
-    const preloader = document.getElementById('preloader');
+    // --- 1. PRELOADER ---
     setTimeout(() => {
-        preloader.style.opacity = '0';
-        setTimeout(() => { preloader.style.display = 'none'; }, 500);
-    }, 2000);
+        document.getElementById('preloader').classList.add('loaded');
+    }, 1500);
 
-    // 2. TABS & OVERLAYS
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const closeButtons = document.querySelectorAll('.close-btn');
+    // --- 2. TABS NAVIGATION ---
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const views = document.querySelectorAll('.view-section');
 
-    tabButtons.forEach(btn => {
+    tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            const targetId = btn.dataset.tab;
-            const overlay = document.getElementById(targetId);
-            overlay.classList.add('active');
+            // Remover activos
+            tabBtns.forEach(b => b.classList.remove('active'));
+            views.forEach(v => v.classList.add('hidden-view'));
             
-            // Si abrimos Stats, animar las barras
-            if (targetId === 'stats-tab') {
-                const fills = document.querySelectorAll('.stat-fill');
-                fills.forEach(fill => {
-                    // Reseteamos el ancho para que anime de nuevo
-                    const targetWidth = fill.style.width;
-                    fill.style.width = '0';
-                    setTimeout(() => { fill.style.width = targetWidth; }, 100);
-                });
-            }
+            // Activar actual
+            btn.classList.add('active');
+            const targetId = btn.getAttribute('data-target');
+            const targetView = document.querySelector(targetId);
+            
+            // Pequeño delay para la animación
+            targetView.classList.remove('hidden-view');
+            
+            // Si es Stats, animar barras
+            if (targetId === '#stats-view') animateStats();
         });
     });
 
-    closeButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const overlay = document.getElementById(btn.dataset.target);
-            overlay.classList.remove('active');
+    function animateStats() {
+        const bars = document.querySelectorAll('.progress-fill');
+        bars.forEach(bar => {
+            const finalWidth = bar.style.width; // Guarda el valor del HTML
+            bar.style.width = '0%'; // Resetea
+            setTimeout(() => {
+                bar.style.width = finalWidth; // Anima
+            }, 100);
+        });
+    }
+
+    // --- 3. ACORDEONES (PLEGABLES) ---
+    const accordions = document.querySelectorAll('.accordion-header');
+    accordions.forEach(acc => {
+        acc.addEventListener('click', () => {
+            const item = acc.parentElement;
+            item.classList.toggle('open');
+            
+            // Cerrar otros (opcional, si quieres que solo uno esté abierto a la vez)
+            // document.querySelectorAll('.accordion-item').forEach(other => {
+            //     if(other !== item) other.classList.remove('open');
+            // });
         });
     });
 
-    // 3. REPRODUCTOR DE MÚSICA (Lógica Real)
-    const audio = document.getElementById('song-player');
-    const playBtn = document.getElementById('play-pause-btn');
-    const icon = playBtn.querySelector('i');
-    const progressBar = document.getElementById('progress-fill');
-    
-    // Datos de la canción
-    const songData = {
-        title: "Why'd You Only Call Me...",
-        artist: "Arctic Monkeys",
-        meaning: "Es una representación de la desesperación narcisista...",
-        lyrics: "The mirror's image tells me it's home time..."
-    };
+    // --- 4. REPRODUCTOR DE MÚSICA ---
+    const audio = document.getElementById('audio-source');
+    const playBtn = document.getElementById('play-btn');
+    const visualizer = document.querySelector('.player-visualizer');
+    let isPlaying = false;
 
-    // Cargar textos
-    document.getElementById('song-title').innerText = songData.title;
-    document.getElementById('song-artist').innerText = songData.artist;
-    document.getElementById('song-meaning').innerText = songData.meaning;
-    document.getElementById('lyrics-container').innerText = songData.lyrics;
-
-    // Play/Pause
     playBtn.addEventListener('click', () => {
-        if (audio.paused) {
-            audio.play();
-            icon.classList.remove('fa-play');
-            icon.classList.add('fa-pause');
-            document.getElementById('album-art').style.animation = "spinBorder 4s linear infinite";
+        if (!isPlaying) {
+            audio.play().catch(e => console.log("Interacción requerida primero"));
+            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            visualizer.classList.add('playing');
+            isPlaying = true;
         } else {
             audio.pause();
-            icon.classList.remove('fa-pause');
-            icon.classList.add('fa-play');
-            document.getElementById('album-art').style.animation = "none";
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            visualizer.classList.remove('playing');
+            isPlaying = false;
         }
     });
 
-    // Actualizar barra de progreso
-    audio.addEventListener('timeupdate', () => {
-        if (audio.duration) {
-            const percent = (audio.currentTime / audio.duration) * 100;
-            progressBar.style.width = percent + '%';
-        }
-    });
-
-    // 4. ACORDEONES
-    window.toggleSection = function(id) {
-        const el = document.getElementById(id);
-        el.classList.toggle('show');
-    };
-
-    // 5. CARGAR BOTS (Grid System)
-    const masculinos = document.getElementById('bots-masculinos');
-    const femeninos = document.getElementById('bots-femeninos');
-    const currentBotName = "Archibald";
+    // --- 5. CARGAR BOTS DESDE ARRAY (Tu lógica existente) ---
+    const masculinosContainer = document.getElementById('bots-masculinos');
+    const femeninosContainer = document.getElementById('bots-femeninos');
+    const nombreActual = "Archibald"; // Para evitar duplicados
 
     if (typeof BOTS_LIST !== 'undefined' && Array.isArray(BOTS_LIST)) {
         BOTS_LIST.forEach(bot => {
-            if (!bot.nombre.includes(currentBotName)) {
-                const html = `
-                    <a href="${bot.url}" class="char-icon" target="_blank">
+            if (!bot.nombre.includes(nombreActual)) {
+                const botHtml = `
+                    <a href="${bot.url}" class="char-icon" title="${bot.nombre}">
                         <img src="${bot.imagen}" alt="${bot.nombre}" loading="lazy">
-                        <span class="char-name">${bot.nombre}</span>
-                    </a>`;
-                
-                if (bot.genero === 'masculino') masculinos.innerHTML += html;
-                else femeninos.innerHTML += html;
+                    </a>
+                `;
+                if (bot.genero === 'masculino' && masculinosContainer) {
+                    masculinosContainer.innerHTML += botHtml;
+                } else if (bot.genero === 'femenino' && femeninosContainer) {
+                    femeninosContainer.innerHTML += botHtml;
+                }
             }
         });
     }
 
-    // 6. BOTON COPIAR
-    const copyBtn = document.getElementById('copy-link-btn');
-    copyBtn.addEventListener('click', () => {
+    // --- 6. BOTÓN COPIAR ---
+    const shareBtn = document.getElementById('share-btn');
+    shareBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(window.location.href);
-        const originalText = copyBtn.innerHTML;
-        copyBtn.innerHTML = '<span class="btn-text">¡COPIADO!</span> <i class="fas fa-check"></i>';
-        copyBtn.style.borderColor = "#fff";
+        const originalText = shareBtn.innerHTML;
+        shareBtn.innerHTML = '<i class="fas fa-check"></i> ¡ENLACE COPIADO!';
+        shareBtn.style.background = '#fff';
+        shareBtn.style.color = '#000';
+        
         setTimeout(() => {
-            copyBtn.innerHTML = originalText;
-            copyBtn.style.borderColor = "var(--c-neon-green)";
+            shareBtn.innerHTML = originalText;
+            shareBtn.style.background = '';
+            shareBtn.style.color = '';
         }, 2000);
     });
 });
