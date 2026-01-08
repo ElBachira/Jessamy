@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 2. SISTEMA DE REPRODUCTOR DE MÚSICA ---
-    // AQUÍ ESTABA EL ERROR: Se corrigió usando backticks (`)
     const songs = [
         {
             title: "Why'd You Only Call Me When You're High",
@@ -202,6 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
         playSound(sfxClick);
         const el = document.getElementById(id);
         if (el) {
+            // Cerramos otros si estuvieran abiertos (opcional, estilo acordeón)
             document.querySelectorAll('.foldable').forEach(f => {
                 if(f.id !== id) f.classList.remove('active');
             });
