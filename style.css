@@ -21,7 +21,6 @@ body {
     background-color: var(--deep-bg);
     color: #fff;
     font-family: var(--f-body);
-    /* SCROLL FIX: Permitimos scroll en el cuerpo si es necesario */
     overflow-x: hidden;
     overflow-y: hidden; /* Desktop default */
     height: 100vh;
@@ -132,10 +131,9 @@ body {
     background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
 }
 .avatar-container {
-    position: relative; width: 180px; height: 180px; margin: 0 auto 20px; /* Hice el avatar más grande */
+    position: relative; width: 180px; height: 180px; margin: 0 auto 20px;
 }
 
-/* Animación ciclo neón para el personaje */
 @keyframes neonHue {
     0% { filter: hue-rotate(0deg) drop-shadow(0 0 5px var(--neon-violet)); border-color: var(--neon-violet); }
     50% { filter: hue-rotate(180deg) drop-shadow(0 0 15px var(--neon-green)); border-color: var(--neon-green); }
@@ -147,9 +145,7 @@ body {
     border: 4px solid #fff; z-index: 2; position: relative;
     transition: 0.5s;
 }
-.avatar-img.neon-cycle {
-    animation: neonHue 8s linear infinite; /* Cambio de color constante */
-}
+.avatar-img.neon-cycle { animation: neonHue 8s linear infinite; }
 
 .avatar-ring {
     position: absolute; inset: -15px; border-radius: 50%; border: 2px dashed var(--neon-green);
@@ -211,18 +207,75 @@ body {
 .play-main { color: var(--neon-violet) !important; font-size: 1.8rem !important; }
 .play-main:hover { color: #fff !important; text-shadow: 0 0 15px var(--neon-violet); }
 
-/* ACORDEONES */
+/* --- CORRECCIÓN DE ACORDEONES (LETRAS Y SIGNIFICADO) --- */
 .foldable-group { margin: 0 20px 20px; display: flex; flex-direction: column; gap: 12px; }
-.foldable { border: 1px solid rgba(57, 255, 20, 0.2); border-radius: 10px; overflow: hidden; background: rgba(0,0,0,0.3); transition: 0.3s; }
-.foldable:hover { border-color: var(--neon-green); box-shadow: 0 0 10px rgba(57,255,20,0.1); }
-.foldable-head {
-    padding: 15px; display: flex; justify-content: space-between; align-items: center;
-    cursor: pointer; font-family: var(--f-mono); font-size: 0.9rem; color: var(--neon-green);
-    background: rgba(57, 255, 20, 0.03); letter-spacing: 1px;
+
+.foldable { 
+    border: 1px solid rgba(57, 255, 20, 0.2); 
+    border-radius: 10px; 
+    overflow: hidden; 
+    background: rgba(0,0,0,0.3); 
+    transition: 0.3s; 
 }
-.foldable-body { max-height: 0; padding: 0 15px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); font-size: 0.95rem; color: #ddd; line-height: 1.6; font-style: italic; opacity: 0; }
-.foldable.active .foldable-body { max-height: 600px; padding: 15px; opacity: 1; background: rgba(0,0,0,0.2); }
-.foldable.active .arrow { transform: rotate(180deg); color: var(--neon-violet); }
+
+/* HEADER DEL ACORDEON - MÁS VISIBLE */
+.foldable-head {
+    padding: 18px 15px; 
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; font-family: var(--f-title); font-size: 1rem; color: var(--neon-green);
+    background: rgba(57, 255, 20, 0.05); letter-spacing: 1px;
+    border-bottom: 1px solid transparent; transition: all 0.3s ease;
+}
+
+.foldable:hover .foldable-head {
+    background: rgba(57, 255, 20, 0.15);
+    box-shadow: inset 0 0 15px rgba(57,255,20,0.1);
+}
+
+/* ESTADO ACTIVO DEL HEADER */
+.foldable.active .foldable-head {
+    background: var(--neon-green);
+    color: #000;
+    text-shadow: none;
+    font-weight: bold;
+    box-shadow: 0 0 20px var(--neon-green);
+}
+
+.foldable.active .arrow { transform: rotate(180deg); color: #000; }
+
+/* CUERPO DEL ACORDEON - CORRECCIÓN SCROLL */
+.foldable-body { 
+    max-height: 0; 
+    overflow: hidden; 
+    transition: max-height 0.5s ease-in-out, padding 0.3s ease; 
+    background: transparent;
+}
+
+.foldable.active .foldable-body { 
+    /* Altura fija para permitir scroll */
+    max-height: 400px; 
+    overflow-y: auto; /* Activa el scroll vertical */
+    padding: 25px 20px; 
+    
+    /* Fondo oscuro para leer mejor */
+    background: rgba(0,0,0,0.9); 
+    border-top: 2px solid var(--neon-green);
+}
+
+/* ESTILO DEL TEXTO DENTRO DEL ACORDEON */
+.foldable-body p {
+    color: #fff;
+    font-family: var(--f-mono);
+    font-size: 1rem;
+    line-height: 1.6;
+    white-space: pre-line; /* IMPORTANTE: Respeta saltos de línea */
+    text-shadow: 1px 1px 2px #000;
+}
+
+/* Custom Scrollbar para el acordeón */
+.foldable.active .foldable-body::-webkit-scrollbar { width: 8px; }
+.foldable.active .foldable-body::-webkit-scrollbar-track { background: #111; }
+.foldable.active .foldable-body::-webkit-scrollbar-thumb { background: var(--neon-green); border-radius: 4px; border: 2px solid #111; }
 
 /* INFO BOX */
 .info-box {
@@ -385,12 +438,11 @@ body {
         border: none;
         overflow: visible; /* Deja que el contenido empuje */
     }
-
     .deco-corner { display: none; }
     
     .profile-header { padding-top: 60px; }
     
-    .avatar-container { width: 160px; height: 160px; } /* Avatar grande también en móvil */
+    .avatar-container { width: 160px; height: 160px; } 
     
     .glitch-text { font-size: 2rem; }
     
@@ -401,6 +453,5 @@ body {
     .music-player-container { margin: 10px 15px; }
     .foldable-group { margin: 0 15px 15px; }
 
-    /* Ajustes para que los dedos no tapen cosas */
     .nav-btn { padding: 10px 20px; font-size: 0.9rem; }
 }
