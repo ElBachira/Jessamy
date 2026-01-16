@@ -1,46 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 0. SISTEMA DE SONIDOS UI ---
+    // --- 0. SISTEMA DE SONIDOS UI (Debounced para evitar errores) ---
     const sfxHover = document.getElementById('sfx-hover');
     const sfxClick = document.getElementById('sfx-click');
     const sfxOpen = document.getElementById('sfx-open');
 
-    // Función auxiliar para reproducir sin error
     const playSound = (audioEl) => {
-        if(audioEl) {
+        if(audioEl && audioEl.readyState >= 2) {
             audioEl.currentTime = 0;
-            audioEl.volume = 0.3; // Volumen bajo
-            audioEl.play().catch(() => {}); // Ignora errores de autoplay
+            audioEl.volume = 0.3; 
+            audioEl.play().catch(() => {});
         }
     };
 
-    // Asignar sonidos a elementos interactivos
-    document.querySelectorAll('.ui-trigger').forEach(el => {
-        el.addEventListener('click', () => playSound(sfxClick));
-    });
-
-    document.querySelectorAll('.ui-trigger-hover').forEach(el => {
-        el.addEventListener('mouseenter', () => playSound(sfxHover));
-    });
-
     // --- 1. PANTALLA DE CARGA ---
     const loader = document.getElementById('loader');
-    
-    // Verificamos que el loader exista para evitar errores
     if (loader) {
         setTimeout(() => {
             loader.style.opacity = '0';
             setTimeout(() => {
                 loader.style.display = 'none';
-                // Sonido de inicio opcional
                 playSound(sfxOpen);
-            }, 800);
-        }, 2000); 
+            }, 500);
+        }, 1500); 
     }
 
     // --- 2. SISTEMA DE REPRODUCTOR DE MÚSICA ---
-    const songs = [
-        {
+    const songData = {
             title: "Why'd You Only Call Me When You're High",
             artist: "Arctic Monkeys",
             src: "song.mp3", 
@@ -95,114 +81,93 @@ document.addEventListener('DOMContentLoaded', () => {
             Tú vales demasiado como para ser el entretenimiento nocturno de un cobarde emocional. Cuando dejes de contestar, vas a sentir un vacío raro, pero después va a llegar el alivio más grande del mundo: darte cuenta de que tu tiempo, tu cariño y tu atención son demasiado buenos para regalarlos a quien solo los quiere cuando está hecho mierda.
 
             Tú puedes vivir sin esas migajas. Y cuando lo hagas, vas a abrirle la puerta a alguien que te llame porque realmente te quiere, no porque las drogas le hicieron bajar la guardia. Ámate lo suficiente para mandarlo a la verga de una vez. Te lo mereces todo, no las sobras de nadie.`
-        }
-    ];
+    };
 
-    let currentIdx = 0;
     const audio = document.getElementById('audio-player');
     const playBtn = document.getElementById('play-pause-btn');
     const playerContainer = document.querySelector('.music-player-container');
     
-    const titleEl = document.getElementById('song-title');
-    const artistEl = document.getElementById('song-artist');
-    const lyricsEl = document.getElementById('lyrics-content');
-    const meaningEl = document.getElementById('meaning-content');
-
-    function loadSong(index) {
-        // Protección por si faltan elementos en el HTML
-        if (!titleEl || !artistEl || !lyricsEl || !meaningEl) return;
-
-        const s = songs[index];
-        titleEl.innerText = s.title;
-        artistEl.innerText = s.artist;
-        if(audio) audio.src = s.src;
-        lyricsEl.innerText = s.lyrics;
-        meaningEl.innerText = s.meaning;
-    }
-
-    loadSong(currentIdx);
+    // Carga inicial
+    document.getElementById('song-title').innerText = songData.title;
+    document.getElementById('song-artist').innerText = songData.artist;
+    document.getElementById('lyrics-content').innerText = songData.lyrics;
+    document.getElementById('meaning-content').innerText = songData.meaning;
+    if(audio) audio.src = songData.src;
 
     if (playBtn && audio) {
         playBtn.addEventListener('click', () => {
             if (audio.paused) {
-                audio.play().then(() => {
-                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                    if(playerContainer) playerContainer.classList.add('playing');
-                }).catch(e => console.log("Interacción requerida o error de audio", e));
+                audio.play();
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playerContainer.classList.add('playing');
             } else {
                 audio.pause();
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                if(playerContainer) playerContainer.classList.remove('playing');
+                playerContainer.classList.remove('playing');
             }
         });
     }
 
-    // --- 3. GALERÍA DE BOTS ---
+    // --- 3. GALERÍA DE BOTS (Optimizado) ---
     const maleGrid = document.getElementById('bots-masculinos');
     const femaleGrid = document.getElementById('bots-femeninos');
-    const myName = "Archibald"; 
+    const myName = "Archibald"; // Filtrado
 
-    // Verificamos que existan los contenedores antes de inyectar
-    if (maleGrid && femaleGrid) {
-        if (typeof BOTS_LIST !== 'undefined' && Array.isArray(BOTS_LIST)) {
-            BOTS_LIST.forEach(bot => {
-                if (!bot.nombre.includes(myName)) {
-                    const item = document.createElement('a');
-                    item.href = bot.url || '#';
-                    item.className = 'bot-item ui-trigger'; 
-                    item.style.animation = `fadeIn 0.5s ease forwards ${Math.random()}s`;
-                    
-                    // Evento de clic para sonido en bots dinámicos
-                    item.addEventListener('click', () => playSound(sfxClick));
+    if (maleGrid && femaleGrid && typeof BOTS_LIST !== 'undefined') {
+        const maleFrag = document.createDocumentFragment();
+        const femaleFrag = document.createDocumentFragment();
 
-                    item.innerHTML = `
-                        <img src="${bot.imagen}" loading="lazy" alt="${bot.nombre}">
-                        <span>${bot.nombre}</span>
-                    `;
+        BOTS_LIST.forEach(bot => {
+            if (!bot.nombre.includes(myName)) {
+                const item = document.createElement('a');
+                item.href = bot.url || '#';
+                item.className = 'bot-item'; 
+                
+                item.innerHTML = `
+                    <img src="${bot.imagen}" loading="lazy" alt="${bot.nombre}">
+                    <span>${bot.nombre}</span>
+                `;
+                // Evento click sonido
+                item.addEventListener('click', () => playSound(sfxClick));
 
-                    if (bot.genero === 'masculino') maleGrid.appendChild(item);
-                    else femaleGrid.appendChild(item);
-                }
-            });
-        } else {
-            maleGrid.innerHTML = '<p style="color:#555; font-size:0.8rem;">Sin conexión...</p>';
-        }
+                if (bot.genero === 'masculino') maleFrag.appendChild(item);
+                else femaleFrag.appendChild(item);
+            }
+        });
+
+        // Inyección única al DOM
+        maleGrid.appendChild(maleFrag);
+        femaleGrid.appendChild(femaleFrag);
     }
 
-    // --- 4. STICKER INTERACTIVO (HONK) ---
+    // --- 4. INTERACCIONES ---
     const sticker = document.getElementById('honk-sticker');
-    const honkAudio = new Audio('https://www.myinstants.com/media/sounds/honk-sound.mp3'); 
-    
-    if (sticker) {
+    if(sticker) {
         sticker.addEventListener('click', () => {
-            honkAudio.currentTime = 0;
-            honkAudio.volume = 0.5;
-            honkAudio.play().catch(() => {});
-            
-            sticker.style.transform = "scale(0.8) rotate(-20deg)";
-            setTimeout(() => sticker.style.transform = "scale(1) rotate(0deg)", 150);
+             const h = new Audio('https://www.myinstants.com/media/sounds/honk-sound.mp3');
+             h.play().catch(()=>{});
+             sticker.style.transform = "scale(0.8) rotate(-20deg)";
+             setTimeout(() => sticker.style.transform = "scale(1)", 200);
         });
     }
 
-    // --- 5. UTILIDADES UI (Tabs & Acordeones) ---
+    // --- 5. FUNCIONES GLOBALES ---
     window.openOverlay = (id) => {
         playSound(sfxOpen);
-        const el = document.getElementById(id);
-        if(el) el.classList.add('active');
+        document.getElementById(id)?.classList.add('active');
     };
     
     window.closeOverlay = (id) => {
         playSound(sfxClick);
-        const el = document.getElementById(id);
-        if(el) el.classList.remove('active');
+        document.getElementById(id)?.classList.remove('active');
     };
 
     window.toggleFold = (id) => {
         playSound(sfxClick);
         const el = document.getElementById(id);
         if (el) {
-            // Cerramos otros si estuvieran abiertos (opcional, estilo acordeón)
-            document.querySelectorAll('.foldable').forEach(f => {
+            // Cierra los demás para rendimiento
+            document.querySelectorAll('.foldable.active').forEach(f => {
                 if(f.id !== id) f.classList.remove('active');
             });
             el.classList.toggle('active');
