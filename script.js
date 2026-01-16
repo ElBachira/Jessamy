@@ -1,41 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 0. SISTEMA DE SONIDOS UI ---
+    // --- 0. SISTEMA DE SONIDOS UI OPTIMIZADO ---
     const sfxHover = document.getElementById('sfx-hover');
     const sfxClick = document.getElementById('sfx-click');
     const sfxOpen = document.getElementById('sfx-open');
 
-    // Función auxiliar para reproducir sin error
+    // Función auxiliar no bloqueante
     const playSound = (audioEl) => {
         if(audioEl) {
             audioEl.currentTime = 0;
-            audioEl.volume = 0.3; // Volumen bajo
-            audioEl.play().catch(() => {}); // Ignora errores de autoplay
+            audioEl.volume = 0.3; 
+            // Promesa sin espera para no bloquear UI
+            audioEl.play().catch(() => {}); 
         }
     };
 
-    // Asignar sonidos a elementos interactivos
-    document.querySelectorAll('.ui-trigger').forEach(el => {
-        el.addEventListener('click', () => playSound(sfxClick));
+    // Usar 'passive: true' mejora rendimiento de scroll en móviles si se usara ahí
+    // Delegación de eventos para mejor performance
+    document.body.addEventListener('click', (e) => {
+        if (e.target.closest('.ui-trigger')) {
+            playSound(sfxClick);
+        }
     });
 
     document.querySelectorAll('.ui-trigger-hover').forEach(el => {
-        el.addEventListener('mouseenter', () => playSound(sfxHover));
+        el.addEventListener('mouseenter', () => playSound(sfxHover), { passive: true });
     });
 
     // --- 1. PANTALLA DE CARGA ---
     const loader = document.getElementById('loader');
     
-    // Verificamos que el loader exista para evitar errores
     if (loader) {
         setTimeout(() => {
             loader.style.opacity = '0';
             setTimeout(() => {
                 loader.style.display = 'none';
-                // Sonido de inicio opcional
                 playSound(sfxOpen);
             }, 800);
-        }, 2000); 
+        }, 1500); // Reducido un poco para sensación de rapidez
     }
 
     // --- 2. SISTEMA DE REPRODUCTOR DE MÚSICA ---
@@ -109,9 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const meaningEl = document.getElementById('meaning-content');
 
     function loadSong(index) {
-        // Protección por si faltan elementos en el HTML
         if (!titleEl || !artistEl || !lyricsEl || !meaningEl) return;
-
         const s = songs[index];
         titleEl.innerText = s.title;
         artistEl.innerText = s.artist;
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 audio.play().then(() => {
                     playBtn.innerHTML = '<i class="fas fa-pause"></i>';
                     if(playerContainer) playerContainer.classList.add('playing');
-                }).catch(e => console.log("Interacción requerida o error de audio", e));
+                }).catch(e => console.log("Interacción requerida o error", e));
             } else {
                 audio.pause();
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
@@ -142,34 +142,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const femaleGrid = document.getElementById('bots-femeninos');
     const myName = "Archibald"; 
 
-    // Verificamos que existan los contenedores antes de inyectar
     if (maleGrid && femaleGrid) {
         if (typeof BOTS_LIST !== 'undefined' && Array.isArray(BOTS_LIST)) {
+            const fragMale = document.createDocumentFragment();
+            const fragFemale = document.createDocumentFragment();
+
             BOTS_LIST.forEach(bot => {
                 if (!bot.nombre.includes(myName)) {
                     const item = document.createElement('a');
                     item.href = bot.url || '#';
                     item.className = 'bot-item ui-trigger'; 
-                    item.style.animation = `fadeIn 0.5s ease forwards ${Math.random()}s`;
+                    // Animación optimizada
+                    item.style.animation = `fadeIn 0.5s ease forwards`; 
                     
-                    // Evento de clic para sonido en bots dinámicos
-                    item.addEventListener('click', () => playSound(sfxClick));
-
                     item.innerHTML = `
                         <img src="${bot.imagen}" loading="lazy" alt="${bot.nombre}">
                         <span>${bot.nombre}</span>
                     `;
 
-                    if (bot.genero === 'masculino') maleGrid.appendChild(item);
-                    else femaleGrid.appendChild(item);
+                    if (bot.genero === 'masculino') fragMale.appendChild(item);
+                    else fragFemale.appendChild(item);
                 }
             });
+            maleGrid.appendChild(fragMale);
+            femaleGrid.appendChild(fragFemale);
         } else {
             maleGrid.innerHTML = '<p style="color:#555; font-size:0.8rem;">Sin conexión...</p>';
         }
     }
 
-    // --- 4. STICKER INTERACTIVO (HONK) ---
+    // --- 4. STICKER INTERACTIVO ---
     const sticker = document.getElementById('honk-sticker');
     const honkAudio = new Audio('https://www.myinstants.com/media/sounds/honk-sound.mp3'); 
     
@@ -179,16 +181,18 @@ document.addEventListener('DOMContentLoaded', () => {
             honkAudio.volume = 0.5;
             honkAudio.play().catch(() => {});
             
+            // Usamos clases CSS si fuera posible, pero mantener JS simple está bien
             sticker.style.transform = "scale(0.8) rotate(-20deg)";
-            setTimeout(() => sticker.style.transform = "scale(1) rotate(0deg)", 150);
+            setTimeout(() => sticker.style.transform = "", 150);
         });
     }
 
     // --- 5. UTILIDADES UI (Tabs & Acordeones) ---
+    // Funciones globales para onlick en HTML
     window.openOverlay = (id) => {
         playSound(sfxOpen);
         const el = document.getElementById(id);
-        if(el) el.classList.add('active');
+        if(el) requestAnimationFrame(() => el.classList.add('active'));
     };
     
     window.closeOverlay = (id) => {
@@ -201,11 +205,14 @@ document.addEventListener('DOMContentLoaded', () => {
         playSound(sfxClick);
         const el = document.getElementById(id);
         if (el) {
-            // Cerramos otros si estuvieran abiertos (opcional, estilo acordeón)
+            // Cierra otros con suavidad
             document.querySelectorAll('.foldable').forEach(f => {
                 if(f.id !== id) f.classList.remove('active');
             });
-            el.classList.toggle('active');
+            // Usa requestAnimationFrame para asegurar que el navegador esté listo para pintar
+            requestAnimationFrame(() => {
+                el.classList.toggle('active');
+            });
         }
     };
 });
